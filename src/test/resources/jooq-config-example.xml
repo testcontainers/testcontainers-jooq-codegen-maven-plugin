@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-3.18.0.xsd">
+    <generator>
+        <database>
+            <inputSchema>public</inputSchema>
+            <includes>.*</includes>
+            <excludes>flyway_schema_history</excludes>
+        </database>
+        <generate>
+            <pojos>true</pojos>
+            <daos>true</daos>
+            <javaTimeTypes>true</javaTimeTypes>
+            <validationAnnotations>false</validationAnnotations>
+        </generate>
+        <target>
+            <packageName>com.sivalabs.techbuzz.jooq</packageName>
+            <directory>src/main/jooq</directory>
+        </target>
+    </generator>
+</configuration>
