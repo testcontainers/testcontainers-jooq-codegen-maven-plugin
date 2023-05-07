@@ -1,5 +1,8 @@
 package com.sivalabs.jooq.codegen;
 
+/**
+ * Plugin configuration properties.
+ */
 public class PluginProps {
     private DatabaseType dbType;
     private FlywayProps flyway;

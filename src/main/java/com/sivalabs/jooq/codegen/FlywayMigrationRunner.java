@@ -1,10 +1,12 @@
 package com.sivalabs.jooq.codegen;
 
+import java.util.Properties;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 
-import java.util.Properties;
-
+/**
+ * FlywayMigrationRunner executes the flyway migration scripts based on the given configuration properties.
+ */
 public class FlywayMigrationRunner {
     private final FlywayProps flywayProps;
 
@@ -16,7 +18,7 @@ public class FlywayMigrationRunner {
         FluentConfiguration configuration = new FluentConfiguration();
         Properties properties = this.getFlywayConfig();
         configuration.configuration(properties);
-        Flyway flyway =  configuration.load();
+        Flyway flyway = configuration.load();
         flyway.migrate();
     }
 

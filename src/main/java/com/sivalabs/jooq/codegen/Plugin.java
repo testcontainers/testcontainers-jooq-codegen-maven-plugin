@@ -1,4 +1,3 @@
-
 package com.sivalabs.jooq.codegen;
 
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
@@ -10,25 +9,21 @@ import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
-
-import org.jooq.codegen.GenerationTool;
-import org.jooq.meta.jaxb.Configuration;
-import org.jooq.meta.jaxb.Jdbc;
-import org.jooq.meta.jaxb.Target;
-
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+import org.jooq.codegen.GenerationTool;
+import org.jooq.meta.jaxb.Configuration;
+import org.jooq.meta.jaxb.Jdbc;
+import org.jooq.meta.jaxb.Target;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 
-@Mojo(
-        name = "generate",
-        defaultPhase = GENERATE_SOURCES,
-        requiresDependencyResolution = TEST,
-        threadSafe = true
-)
+/**
+ * Plugin entry point.
+ */
+@Mojo(name = "generate", defaultPhase = GENERATE_SOURCES, requiresDependencyResolution = TEST, threadSafe = true)
 public class Plugin extends AbstractMojo {
     @Parameter(property = "project", required = true, readonly = true)
     private MavenProject project;
@@ -60,14 +55,14 @@ public class Plugin extends AbstractMojo {
 
         if (generator == null) {
             getLog().error("Incorrect configuration of jOOQ code generation tool");
-            getLog().error(
-                    "\n"
-                            + "The jOOQ-codegen-maven module's generator configuration is not set up correctly.\n"
-                            + "This can have a variety of reasons, among which:\n"
-                            + "- Your pom.xml's <configuration> contains invalid XML according to " + XSD_CODEGEN + "\n"
-                            + "- There is a version or artifact mismatch between your pom.xml and your commandline");
+            getLog().error("\n"
+                    + "The jOOQ-codegen-maven module's generator configuration is not set up correctly.\n"
+                    + "This can have a variety of reasons, among which:\n"
+                    + "- Your pom.xml's <configuration> contains invalid XML according to " + XSD_CODEGEN + "\n"
+                    + "- There is a version or artifact mismatch between your pom.xml and your commandline");
 
-            throw new MojoExecutionException("Incorrect configuration of jOOQ code generation tool. See error above for details.");
+            throw new MojoExecutionException(
+                    "Incorrect configuration of jOOQ code generation tool. See error above for details.");
         }
 
         ClassLoader oldCL = Thread.currentThread().getContextClassLoader();
@@ -79,10 +74,10 @@ public class Plugin extends AbstractMojo {
             String username;
             String password;
 
-            if(this.jdbc == null ||
-            this.jdbc.getUrl() == null ||
-            this.jdbc.getUsername() == null ||
-            this.jdbc.getPassword() == null) {
+            if (this.jdbc == null
+                    || this.jdbc.getUrl() == null
+                    || this.jdbc.getUsername() == null
+                    || this.jdbc.getPassword() == null) {
                 container = DatabaseProvider.getDatabaseContainer(dbType);
                 container.start();
 
@@ -116,10 +111,7 @@ public class Plugin extends AbstractMojo {
                 generator.getTarget().setDirectory(DEFAULT_TARGET_DIRECTORY);
             }
 
-            Jdbc jdbc = new Jdbc()
-                    .withUrl(jdbcUrl)
-                    .withUsername(username)
-                    .withPassword(password);
+            Jdbc jdbc = new Jdbc().withUrl(jdbcUrl).withUsername(username).withPassword(password);
 
             if (flyway.getLocations() != null && !flyway.getLocations().isEmpty()) {
                 FlywayMigrationRunner flywayRunner = new FlywayMigrationRunner(flyway);

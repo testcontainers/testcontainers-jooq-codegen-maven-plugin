@@ -1,5 +1,8 @@
 package com.sivalabs.jooq.codegen;
 
+/**
+ * Flyway configuration properties.
+ */
 public class FlywayProps {
     private String jdbcUrl;
     private String username;
