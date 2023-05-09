@@ -41,7 +41,7 @@ public class Plugin extends AbstractMojo {
     private org.jooq.meta.jaxb.Generator generator;
 
     @Parameter
-    private DatabaseType dbType;
+    private DatabaseProps database;
 
     @Parameter
     private FlywayProps flyway;
@@ -78,7 +78,7 @@ public class Plugin extends AbstractMojo {
                     || this.jdbc.getUrl() == null
                     || this.jdbc.getUsername() == null
                     || this.jdbc.getPassword() == null) {
-                container = DatabaseProvider.getDatabaseContainer(dbType);
+                container = DatabaseProvider.getDatabaseContainer(database);
                 container.start();
 
                 jdbcUrl = container.getJdbcUrl();
@@ -98,7 +98,7 @@ public class Plugin extends AbstractMojo {
             this.flyway.setPassword(password);
 
             PluginProps pluginProps = new PluginProps();
-            pluginProps.setDbType(dbType);
+            pluginProps.setDatabase(database);
             pluginProps.setFlyway(flyway);
 
             Thread.currentThread().setContextClassLoader(pluginClassLoader);

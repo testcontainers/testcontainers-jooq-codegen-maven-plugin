@@ -26,16 +26,32 @@ public class DatabaseProvider {
     /**
      * Instantiates a Docker container using Testcontainers for the given database type.
      */
-    static JdbcDatabaseContainer<?> getDatabaseContainer(DatabaseType dbType) {
-        switch (dbType) {
-            case POSTGRES:
-                return new PostgreSQLContainer<>(POSTGRES_IMAGE);
-            case MYSQL:
-                new MySQLContainer<>(MYSQL_IMAGE);
-            case MARIADB:
-                new MariaDBContainer<>(MARIADB_IMAGE);
-            default:
-                throw new RuntimeException("Unsupported DatabaseType");
+    static JdbcDatabaseContainer<?> getDatabaseContainer(DatabaseProps props) {
+        DatabaseType dbType = props.getType();
+        String image = props.getContainerImage();
+        try {
+            switch (dbType) {
+                case POSTGRES:
+                    if (image == null) {
+                        image = POSTGRES_IMAGE;
+                    }
+                    return new PostgreSQLContainer<>(image);
+                case MARIADB:
+                    if (image == null) {
+                        image = MARIADB_IMAGE;
+                    }
+                    return new MariaDBContainer<>(image);
+                case MYSQL:
+                    if (image == null) {
+                        image = MYSQL_IMAGE;
+                    }
+                    return new MySQLContainer<>(image);
+                default:
+                    throw new RuntimeException("Unsupported DatabaseType: " + dbType);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Unable to instantiate database using Testcontainers", e);
         }
     }
 }

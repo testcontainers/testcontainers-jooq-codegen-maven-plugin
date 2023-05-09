@@ -1,19 +1,14 @@
-# jooq-testcontainers-codegen-maven-plugin
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-The `jooq-testcontainers-codegen-maven-plugin` simplifies the jOOQ code generation 
-by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway database migrations.
+    <groupId>com.sivalabs.jooqtc</groupId>
+    <artifactId>mariadb-flyway-example</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
-## Supported databases:
-* Postgres
-* MySQL
-* MariaDB
-
-## How to use?
-
-1. **With PostgreSQL and Flyway migrations**
-
-```xml
-<project>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -21,9 +16,9 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway d
         <testcontainers.version>1.18.0</testcontainers.version>
         <jooq-testcontainers-codegen-maven-plugin.version>0.0.2</jooq-testcontainers-codegen-maven-plugin.version>
         <jooq.version>3.18.3</jooq.version>
-        <postgres.version>42.6.0</postgres.version>
+        <mariadb-java-client.version>3.1.2</mariadb-java-client.version>
     </properties>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.jooq</groupId>
@@ -40,13 +35,13 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway d
                 <dependencies>
                     <dependency>
                         <groupId>org.testcontainers</groupId>
-                        <artifactId>postgresql</artifactId>
+                        <artifactId>mariadb</artifactId>
                         <version>${testcontainers.version}</version>
                     </dependency>
                     <dependency>
-                        <groupId>org.postgresql</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>${postgres.version}</version>
+                        <groupId>org.mariadb.jdbc</groupId>
+                        <artifactId>mariadb-java-client</artifactId>
+                        <version>${mariadb-java-client.version}</version>
                     </dependency>
                 </dependencies>
                 <executions>
@@ -58,20 +53,20 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway d
                         <phase>generate-sources</phase>
                         <configuration>
                             <database>
-                                <type>POSTGRES</type>
-                                <containerImage>postgres:15.2-alpine</containerImage>
+                                <type>MARIADB</type>
+                                <containerImage>mariadb:10.11</containerImage>
                             </database>
                             <flyway>
                                 <locations>
-                                    filesystem:src/main/resources/db/migration/postgres,
-                                    filesystem:src/main/resources/db/migration/postgresql
+                                    filesystem:src/main/resources/db/migration/mariadb
                                 </locations>
                             </flyway>
+                            <!-- Generator parameters -->
                             <generator>
                                 <database>
                                     <includes>.*</includes>
                                     <excludes>flyway_schema_history</excludes>
-                                    <inputSchema>public</inputSchema>
+                                    <inputSchema>test</inputSchema>
                                 </database>
                                 <target>
                                     <packageName>org.jooq.codegen.maven.example</packageName>
@@ -84,17 +79,5 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway d
             </plugin>
         </plugins>
     </build>
+
 </project>
-```
-
-Try with example application
-
-```shell
-$ cd examples/postgres-flyway-example
-$ mvn clean package
-```
-
-The JOOQ code should be generated under example/target/generated-sources/jooq folder.
-
-## CREDITS:
-This plugin is heavily based on official https://github.com/jOOQ/jOOQ/tree/main/jOOQ-codegen-maven.

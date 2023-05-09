@@ -5,8 +5,8 @@
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.sivalabs</groupId>
-    <artifactId>jooq-tc-codegen-example</artifactId>
+    <groupId>com.sivalabs.jooqtc</groupId>
+    <artifactId>mysql-flyway-example</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -14,14 +14,16 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <testcontainers.version>1.18.0</testcontainers.version>
-        <jooq-testcontainers-codegen-maven-plugin.version>0.0.1</jooq-testcontainers-codegen-maven-plugin.version>
+        <jooq-testcontainers-codegen-maven-plugin.version>0.0.2</jooq-testcontainers-codegen-maven-plugin.version>
+        <jooq.version>3.18.3</jooq.version>
+        <mysql-connector-j.version>8.0.32</mysql-connector-j.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
-            <version>3.18.3</version>
+            <version>${jooq.version}</version>
         </dependency>
     </dependencies>
     <build>
@@ -33,18 +35,13 @@
                 <dependencies>
                     <dependency>
                         <groupId>org.testcontainers</groupId>
-                        <artifactId>postgresql</artifactId>
+                        <artifactId>mysql</artifactId>
                         <version>${testcontainers.version}</version>
                     </dependency>
                     <dependency>
-                        <groupId>org.testcontainers</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>${testcontainers.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.postgresql</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>42.6.0</version>
+                        <groupId>com.mysql</groupId>
+                        <artifactId>mysql-connector-j</artifactId>
+                        <version>${mysql-connector-j.version}</version>
                     </dependency>
                 </dependencies>
                 <executions>
@@ -55,11 +52,13 @@
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <dbType>POSTGRES</dbType>
+                            <database>
+                                <type>MYSQL</type>
+                                <containerImage>mysql:8.0.33</containerImage>
+                            </database>
                             <flyway>
                                 <locations>
-                                    filesystem:src/main/resources/db/migration/postgres,
-                                    filesystem:src/main/resources/db/migration/postgresql
+                                    filesystem:src/main/resources/db/migration/mysql
                                 </locations>
                             </flyway>
                             <!-- Generator parameters -->
@@ -67,7 +66,7 @@
                                 <database>
                                     <includes>.*</includes>
                                     <excludes>flyway_schema_history</excludes>
-                                    <inputSchema>public</inputSchema>
+                                    <inputSchema>test</inputSchema>
                                 </database>
                                 <target>
                                     <packageName>org.jooq.codegen.maven.example</packageName>

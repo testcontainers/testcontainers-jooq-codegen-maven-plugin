@@ -4,15 +4,15 @@ package com.sivalabs.jooq.codegen;
  * Plugin configuration properties.
  */
 public class PluginProps {
-    private DatabaseType dbType;
+    private DatabaseProps database;
     private FlywayProps flyway;
 
-    public DatabaseType getDbType() {
-        return dbType;
+    public DatabaseProps getDatabase() {
+        return database;
     }
 
-    public void setDbType(DatabaseType dbType) {
-        this.dbType = dbType;
+    public void setDatabase(DatabaseProps database) {
+        this.database = database;
     }
 
     public FlywayProps getFlyway() {
