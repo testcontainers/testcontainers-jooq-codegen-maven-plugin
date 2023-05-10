@@ -3,6 +3,9 @@
 The `jooq-testcontainers-codegen-maven-plugin` simplifies the jOOQ code generation 
 by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway database migrations.
 
+[![Build](https://github.com/sivalabs/jooq-testcontainers-codegen-maven-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/sivalabs/jooq-testcontainers-codegen-maven-plugin/actions/workflows/build.yml)
+![Maven Central](https://img.shields.io/maven-central/v/io.github.sivalabs/jooq-testcontainers-codegen-maven-plugin)
+
 ## Supported databases:
 * Postgres
 * MySQL
@@ -58,7 +61,17 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway d
                         <phase>generate-sources</phase>
                         <configuration>
                             <database>
+                                <!--
+                                "type" can be: POSTGRES, MYSQL, MARIADB
+                                -->
                                 <type>POSTGRES</type>
+                                <!--
+                                "containerImage" is optional.
+                                The defaults are 
+                                    POSTGRES: postgres:15.2-alpine
+                                    MYSQL: mysql:8.0.33
+                                    MARIADB: mariadb:10.11
+                                -->
                                 <containerImage>postgres:15.2-alpine</containerImage>
                             </database>
                             <flyway>
@@ -67,6 +80,10 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway d
                                     filesystem:src/main/resources/db/migration/postgresql
                                 </locations>
                             </flyway>
+                            <!-- 
+                                You can configure any supporting jooq config here. 
+                                see https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration/
+                            -->
                             <generator>
                                 <database>
                                     <includes>.*</includes>
