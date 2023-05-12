@@ -3,8 +3,7 @@
 The `jooq-testcontainers-codegen-maven-plugin` simplifies the jOOQ code generation 
 by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway database migrations.
 
-[![Build](https://github.com/sivalabs/jooq-testcontainers-codegen-maven-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/sivalabs/jooq-testcontainers-codegen-maven-plugin/actions/workflows/build.yml)
-![Maven Central](https://img.shields.io/maven-central/v/io.github.sivalabs/jooq-testcontainers-codegen-maven-plugin)
+[![Build](https://github.com/testcontainers/jooq-testcontainers-codegen-maven-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/testcontainers/jooq-testcontainers-codegen-maven-plugin/actions/workflows/build.yml)
 
 ## Supported databases:
 * Postgres
@@ -37,7 +36,7 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway d
     <build>
         <plugins>
             <plugin>
-                <groupId>io.github.sivalabs</groupId>
+                <groupId>org.testcontainers</groupId>
                 <artifactId>jooq-testcontainers-codegen-maven-plugin</artifactId>
                 <version>${jooq-testcontainers-codegen-maven-plugin.version}</version>
                 <dependencies>

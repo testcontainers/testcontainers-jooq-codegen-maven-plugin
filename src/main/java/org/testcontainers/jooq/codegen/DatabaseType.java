@@ -1,4 +1,4 @@
-package com.sivalabs.jooq.codegen;
+package org.testcontainers.jooq.codegen;
 
 /**
  * Database Types supported by the plugin

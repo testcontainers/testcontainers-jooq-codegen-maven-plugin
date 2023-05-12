@@ -1,4 +1,4 @@
-package com.sivalabs.jooq.codegen;
+package org.testcontainers.jooq.codegen;
 
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MariaDBContainer;

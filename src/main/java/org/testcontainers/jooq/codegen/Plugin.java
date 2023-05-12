@@ -1,4 +1,4 @@
-package com.sivalabs.jooq.codegen;
+package org.testcontainers.jooq.codegen;
 
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
 import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;

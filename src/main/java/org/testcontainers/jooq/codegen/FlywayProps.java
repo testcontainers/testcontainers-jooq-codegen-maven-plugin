@@ -1,4 +1,4 @@
-package com.sivalabs.jooq.codegen;
+package org.testcontainers.jooq.codegen;
 
 /**
  * Flyway configuration properties.

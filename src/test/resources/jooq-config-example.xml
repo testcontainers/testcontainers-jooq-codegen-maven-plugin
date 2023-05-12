@@ -13,7 +13,7 @@
             <validationAnnotations>false</validationAnnotations>
         </generate>
         <target>
-            <packageName>com.sivalabs.techbuzz.jooq</packageName>
+            <packageName>com.mycompany.myapp.jooq</packageName>
             <directory>src/main/jooq</directory>
         </target>
     </generator>

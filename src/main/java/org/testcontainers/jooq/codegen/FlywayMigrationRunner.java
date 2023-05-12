@@ -1,4 +1,4 @@
-package com.sivalabs.jooq.codegen;
+package org.testcontainers.jooq.codegen;
 
 import java.util.Properties;
 import org.flywaydb.core.Flyway;
