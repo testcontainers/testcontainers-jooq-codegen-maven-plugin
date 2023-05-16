@@ -28,6 +28,7 @@ public class FlywayMigrationRunner {
         properties.put("flyway.user", flywayProps.getUsername());
         properties.put("flyway.password", flywayProps.getPassword());
         properties.put("flyway.locations", flywayProps.getLocations());
+        properties.put("flyway.createSchemas", flywayProps.isCreateSchemas());
 
         return properties;
     }

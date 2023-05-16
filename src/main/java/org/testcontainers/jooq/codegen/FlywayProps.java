@@ -8,6 +8,8 @@ public class FlywayProps {
     private String username;
     private String password;
     private String locations;
+    private String defaultSchema;
+    private boolean createSchemas;
 
     public String getJdbcUrl() {
         return jdbcUrl;
@@ -39,5 +41,21 @@ public class FlywayProps {
 
     public void setLocations(String locations) {
         this.locations = locations;
+    }
+
+    public void setCreateSchemas(boolean createSchemas) {
+        this.createSchemas = createSchemas;
+    }
+
+    public boolean isCreateSchemas() {
+        return createSchemas;
+    }
+
+    public String getDefaultSchema() {
+        return defaultSchema;
+    }
+
+    public void setDefaultSchema(String defaultSchema) {
+        this.defaultSchema = defaultSchema;
     }
 }
