@@ -9,6 +9,7 @@ public class FlywayProps {
     private String password;
     private String locations;
     private String defaultSchema;
+    private String table;
     private boolean createSchemas;
 
     public String getJdbcUrl() {
@@ -57,5 +58,13 @@ public class FlywayProps {
 
     public void setDefaultSchema(String defaultSchema) {
         this.defaultSchema = defaultSchema;
+    }
+
+    public String getTable() {
+        return table;
+    }
+
+    public void setTable(String table) {
+        this.table = table;
     }
 }
