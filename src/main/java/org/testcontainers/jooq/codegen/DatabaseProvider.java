@@ -29,23 +29,27 @@ public class DatabaseProvider {
     static JdbcDatabaseContainer<?> getDatabaseContainer(DatabaseProps props) {
         DatabaseType dbType = props.getType();
         String image = props.getContainerImage();
+        JdbcDatabaseContainer<?> container;
         try {
             switch (dbType) {
                 case POSTGRES:
-                    if (image == null) {
+                    if (isEmpty(image)) {
                         image = POSTGRES_IMAGE;
                     }
-                    return new PostgreSQLContainer<>(image);
+                    container = new PostgreSQLContainer<>(image);
+                    break;
                 case MARIADB:
-                    if (image == null) {
+                    if (isEmpty(image)) {
                         image = MARIADB_IMAGE;
                     }
-                    return new MariaDBContainer<>(image);
+                    container = new MariaDBContainer<>(image);
+                    break;
                 case MYSQL:
-                    if (image == null) {
+                    if (isEmpty(image)) {
                         image = MYSQL_IMAGE;
                     }
-                    return new MySQLContainer<>(image);
+                    container = new MySQLContainer<>(image);
+                    break;
                 default:
                     throw new RuntimeException("Unsupported DatabaseType: " + dbType);
             }
@@ -53,5 +57,23 @@ public class DatabaseProvider {
             e.printStackTrace();
             throw new RuntimeException("Unable to instantiate database using Testcontainers", e);
         }
+        if (isNotEmpty(props.getUsername())) {
+            container.withUsername(props.getUsername());
+        }
+        if (isNotEmpty(props.getPassword())) {
+            container.withPassword(props.getPassword());
+        }
+        if (isNotEmpty(props.getDatabaseName())) {
+            container.withDatabaseName(props.getDatabaseName());
+        }
+        return container;
+    }
+
+    private static boolean isNotEmpty(String str) {
+        return !isEmpty(str);
+    }
+
+    private static boolean isEmpty(String str) {
+        return str == null || str.trim().isEmpty();
     }
 }

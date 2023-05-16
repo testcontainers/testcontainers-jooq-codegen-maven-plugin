@@ -54,7 +54,10 @@
                         <configuration>
                             <database>
                                 <type>MYSQL</type>
-                                <containerImage>mysql:8.0.33</containerImage>
+                                <containerImage>mysql:8.0.33</containerImage> <!-- optional -->
+                                <username>test</username> <!-- optional -->
+                                <password>test</password> <!-- optional -->
+                                <databaseName>test</databaseName> <!-- optional -->
                             </database>
                             <flyway>
                                 <locations>

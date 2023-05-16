@@ -72,6 +72,9 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway d
                                     MARIADB: mariadb:10.11
                                 -->
                                 <containerImage>postgres:15.2-alpine</containerImage>
+                                <username>test</username> <!-- optional -->
+                                <password>test</password> <!-- optional -->
+                                <databaseName>test</databaseName> <!-- optional -->
                             </database>
                             <flyway>
                                 <locations>

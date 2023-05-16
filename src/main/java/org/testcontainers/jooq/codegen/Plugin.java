@@ -74,6 +74,8 @@ public class Plugin extends AbstractMojo {
             String username;
             String password;
 
+            // If jdbc details are provided, then connect to that existing database.
+            // Otherwise, spin up the database using Testcontainers
             if (this.jdbc == null
                     || this.jdbc.getUrl() == null
                     || this.jdbc.getUsername() == null

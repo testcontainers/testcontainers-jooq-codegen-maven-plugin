@@ -54,7 +54,10 @@
                         <configuration>
                             <database>
                                 <type>MARIADB</type>
-                                <containerImage>mariadb:10.11</containerImage>
+                                <containerImage>mariadb:10.11</containerImage> <!-- optional -->
+                                <username>test</username> <!-- optional -->
+                                <password>test</password> <!-- optional -->
+                                <databaseName>test</databaseName> <!-- optional -->
                             </database>
                             <flyway>
                                 <locations>
