@@ -7,7 +7,7 @@
 
 	<groupId>org.testcontainers</groupId>
 	<artifactId>jooq-testcontainers-codegen-maven-plugin</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.1</version>
 	<packaging>maven-plugin</packaging>
 	<name>jooq-testcontainers-codegen-maven-plugin</name>
 	<description>jOOQ code generator using Testcontainers</description>
@@ -49,11 +49,9 @@
 		<maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
 		<maven-source-plugin.version>3.2.1</maven-source-plugin.version>
 		<maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
-		<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
 		<maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
-		<maven-release-plugin.version>2.5.3</maven-release-plugin.version>
 		<maven-plugin-tools-annotations.version>3.6.1</maven-plugin-tools-annotations.version>
-		<testcontainers.version>1.18.0</testcontainers.version>
+		<testcontainers.version>1.18.1</testcontainers.version>
 		<flyway-core.version>9.16.3</flyway-core.version>
 		<junit-jupiter.version>5.9.3</junit-jupiter.version>
 		<jooq.version>3.18.3</jooq.version>

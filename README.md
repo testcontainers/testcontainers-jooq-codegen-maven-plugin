@@ -20,8 +20,8 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway d
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <testcontainers.version>1.18.0</testcontainers.version>
-        <jooq-testcontainers-codegen-maven-plugin.version>0.0.2</jooq-testcontainers-codegen-maven-plugin.version>
+        <testcontainers.version>1.18.1</testcontainers.version>
+        <jooq-testcontainers-codegen-maven-plugin.version>0.0.1</jooq-testcontainers-codegen-maven-plugin.version>
         <jooq.version>3.18.3</jooq.version>
         <postgres.version>42.6.0</postgres.version>
     </properties>
