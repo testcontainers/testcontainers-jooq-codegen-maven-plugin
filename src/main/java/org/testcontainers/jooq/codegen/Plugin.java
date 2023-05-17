@@ -1,5 +1,6 @@
 package org.testcontainers.jooq.codegen;
 
+import static java.util.stream.Collectors.toMap;
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
 import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
 import static org.jooq.Constants.XSD_CODEGEN;
@@ -9,11 +10,13 @@ import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
+import java.util.Map;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+import org.flywaydb.core.internal.configuration.ConfigUtils;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.Jdbc;
@@ -44,7 +47,7 @@ public class Plugin extends AbstractMojo {
     private DatabaseProps database;
 
     @Parameter
-    private FlywayProps flyway;
+    private Map<String, String> flyway;
 
     @Override
     public void execute() throws MojoExecutionException {
@@ -92,16 +95,10 @@ public class Plugin extends AbstractMojo {
                 password = this.jdbc.getPassword();
             }
 
-            if (flyway == null) {
-                flyway = new FlywayProps();
-            }
-            this.flyway.setJdbcUrl(jdbcUrl);
-            this.flyway.setUsername(username);
-            this.flyway.setPassword(password);
-
-            PluginProps pluginProps = new PluginProps();
-            pluginProps.setDatabase(database);
-            pluginProps.setFlyway(flyway);
+            this.flyway = flyway.keySet().stream().collect(toMap("flyway."::concat, flyway::get));
+            this.flyway.put(ConfigUtils.URL, jdbcUrl);
+            this.flyway.put(ConfigUtils.USER, username);
+            this.flyway.put(ConfigUtils.PASSWORD, password);
 
             Thread.currentThread().setContextClassLoader(pluginClassLoader);
             String actualBasedir = basedir == null ? project.getBasedir().getAbsolutePath() : basedir;
@@ -115,11 +112,9 @@ public class Plugin extends AbstractMojo {
 
             Jdbc jdbc = new Jdbc().withUrl(jdbcUrl).withUsername(username).withPassword(password);
 
-            if (flyway.getLocations() != null && !flyway.getLocations().isEmpty()) {
-                FlywayMigrationRunner flywayRunner = new FlywayMigrationRunner(flyway);
-                flywayRunner.run();
-                getLog().info("Flyway migrations applied successfully");
-            }
+            FlywayMigrationRunner flywayRunner = new FlywayMigrationRunner(flyway);
+            flywayRunner.run();
+            getLog().info("Flyway migrations applied successfully");
 
             Configuration configuration = new Configuration();
             configuration.setJdbc(jdbc);
