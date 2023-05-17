@@ -77,7 +77,13 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway d
                                 <databaseName>test</databaseName> <!-- optional -->
                             </database>
                             <flyway>
-                                <locations>
+                                <!--
+                                You can configure any supporting flyway config here.
+                                see https://flywaydb.org/documentation/configuration/parameters/ 
+                                -->
+                                <defaultSchema>bank</defaultSchema> <!-- optional -->
+                                <createSchemas>true</createSchemas> <!-- optional -->
+                                <locations> <!-- optional -->
                                     filesystem:src/main/resources/db/migration/postgres,
                                     filesystem:src/main/resources/db/migration/postgresql
                                 </locations>
