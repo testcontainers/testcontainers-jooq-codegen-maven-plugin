@@ -1,5 +1,6 @@
 package org.testcontainers.jooq.codegen;
 
+import static java.util.stream.Collectors.toMap;
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
 import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
 import static org.jooq.Constants.XSD_CODEGEN;
@@ -94,6 +95,7 @@ public class Plugin extends AbstractMojo {
                 password = this.jdbc.getPassword();
             }
 
+            this.flyway = flyway.keySet().stream().collect(toMap("flyway."::concat, flyway::get));
             this.flyway.put(ConfigUtils.URL, jdbcUrl);
             this.flyway.put(ConfigUtils.USER, username);
             this.flyway.put(ConfigUtils.PASSWORD, password);
