@@ -1,4 +1,4 @@
-package org.testcontainers.jooq.codegen;
+package org.testcontainers.jooq.codegen.database;
 
 /**
  * Database configuration properties.
