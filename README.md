@@ -23,7 +23,7 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway d
         <testcontainers.version>1.18.1</testcontainers.version>
         <jooq-testcontainers-codegen-maven-plugin.version>0.0.1</jooq-testcontainers-codegen-maven-plugin.version>
         <jooq.version>3.18.3</jooq.version>
-        <postgres.version>42.6.0</postgres.version>
+        <postgresql.version>42.6.0</postgresql.version>
     </properties>
     
     <dependencies>
@@ -48,7 +48,7 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway d
                     <dependency>
                         <groupId>org.postgresql</groupId>
                         <artifactId>postgresql</artifactId>
-                        <version>${postgres.version}</version>
+                        <version>${postgresql.version}</version>
                     </dependency>
                 </dependencies>
                 <executions>
