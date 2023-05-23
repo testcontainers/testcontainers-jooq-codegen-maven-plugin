@@ -82,22 +82,24 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
                                 <databaseName>test</databaseName> <!-- optional -->
                             </database>
                             <flyway>
-                                <!-- Any configurable Flyway properties
-                                https://documentation.red-gate.com/fd/parameters-184127474.html 
+                                <!--
+                                You can configure any supporting flyway config here.
+                                see https://flywaydb.org/documentation/configuration/parameters/ 
                                 -->
-                                <locations>
+                                <defaultSchema>bank</defaultSchema> <!-- optional -->
+                                <createSchemas>true</createSchemas> <!-- optional -->
+                                <locations> <!-- optional -->
                                     filesystem:src/main/resources/db/migration/postgres,
                                     filesystem:src/main/resources/db/migration/postgresql
                                 </locations>
                             </flyway>
                             <!-- or
-                            Now supports only changeLogPath and changeLogDirectory,as Liquibase doesn't not have
+                            Now supports only changeLogPath and changeLogDirectory,as Liquibase doesn't have
                              generic properties map
                             <liquibase>
                                <changeLogPath>db.changelog-root.xml</changeLogPath>
                                <changeLogDirectory>src/main/resources/db/changelog</changeLogPath>
-                            </liquibase>
-                            -->
+                            </liquibase> -->
                             <!-- 
                                 You can configure any supporting jooq config here. 
                                 see https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration/
