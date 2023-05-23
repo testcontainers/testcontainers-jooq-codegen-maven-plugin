@@ -1,8 +1,3 @@
--- scf.payment_batch definition
-
--- Drop table
-
--- DROP TABLE scf.payment_batch;
 CREATE SCHEMA custom;
 
 CREATE TABLE custom.users
