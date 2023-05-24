@@ -25,7 +25,7 @@ public class DatabaseProvider {
                 case POSTGRES -> container = new PostgreSQLContainer<>(image.orElse(POSTGRES.getDefaultImage()));
                 case MARIADB -> container = new MariaDBContainer<>(image.orElse(MARIADB.getDefaultImage()));
                 case MYSQL -> container = new MySQLContainer<>(image.orElse(MYSQL.getDefaultImage()));
-                default -> throw new RuntimeException("Unsupported DatabaseType: " + dbType);
+                default -> throw new IllegalArgumentException("Unsupported DatabaseType: " + dbType);
             }
         } catch (Exception e) {
             e.printStackTrace();

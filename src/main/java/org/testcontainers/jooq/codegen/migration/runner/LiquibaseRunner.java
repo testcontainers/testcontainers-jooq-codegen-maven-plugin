@@ -26,12 +26,16 @@ import org.apache.maven.plugins.annotations.Parameter;
  */
 public class LiquibaseRunner implements MigrationRunner {
 
+    /**
+     * Required property <br/>
+     * Example: src/main/resources/db/changelog/db.changelog-root.xml
+     */
     @Parameter(name = "liquibase.changeLogPath", required = true)
     private String changeLogPath;
 
     /**
      * Optional <br/>
-     * Default - project.basedir
+     * Default: project.basedir
      */
     @Parameter(name = "liquibase.changeLogDirectory")
     private String changeLogDirectory;
