@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.testcontainers.jooqtc</groupId>
-    <artifactId>postgres-flyway-example</artifactId>
+    <artifactId>postgres-liquibase-example</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -59,18 +59,22 @@
                                 <password>test</password> <!-- optional -->
                                 <databaseName>test</databaseName> <!-- optional -->
                             </database>
-                            <flyway>
-                                <locations>
-                                    filesystem:src/main/resources/db/migration/postgres,
-                                    filesystem:src/main/resources/db/migration/postgresql
-                                </locations>
-                            </flyway>
+                            <liquibase>
+                                <changeLogPath>src/main/resources/db/changelog/db.changelog-root.xml</changeLogPath>
+                                <liquibaseSchemaName>public</liquibaseSchemaName>
+                                <defaultSchemaName>public</defaultSchemaName>
+                                <!-- or
+                               <changeLogPath>db.changelog-root.xml</changeLogPath>
+                               <changeLogDirectory>src/main/resources/db/changelog</changeLogPath>
+                               -->
+                            </liquibase>
+
                             <!-- Generator parameters -->
                             <generator>
                                 <database>
                                     <includes>.*</includes>
-                                    <excludes>flyway_schema_history</excludes>
-                                    <inputSchema>public</inputSchema>
+                                    <excludes>DATABASECHANGELOG</excludes>
+                                    <inputSchema>custom</inputSchema>
                                 </database>
                                 <target>
                                     <packageName>org.jooq.codegen.maven.example</packageName>
