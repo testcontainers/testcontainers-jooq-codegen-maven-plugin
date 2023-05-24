@@ -1,5 +1,3 @@
-CREATE SCHEMA custom;
-
 CREATE TABLE custom.users
 (
     uuid uuid PRIMARY KEY DEFAULT gen_random_uuid(),

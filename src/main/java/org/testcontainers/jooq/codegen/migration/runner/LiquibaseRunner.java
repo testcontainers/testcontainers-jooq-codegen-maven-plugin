@@ -65,7 +65,7 @@ public class LiquibaseRunner implements MigrationRunner {
             setParameters(liquibase);
             liquibase.update();
         } catch (Exception e) {
-            throw new MojoExecutionException(e);
+            throw new MojoExecutionException(e.getMessage());
         }
     }
 

@@ -7,7 +7,7 @@
 
 	<groupId>org.testcontainers</groupId>
 	<artifactId>jooq-testcontainers-codegen-maven-plugin</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 	<name>jooq-testcontainers-codegen-maven-plugin</name>
 	<description>jOOQ code generator using Testcontainers</description>

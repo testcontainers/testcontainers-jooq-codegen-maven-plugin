@@ -14,7 +14,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <testcontainers.version>1.18.1</testcontainers.version>
-        <jooq-testcontainers-codegen-maven-plugin.version>0.0.2</jooq-testcontainers-codegen-maven-plugin.version>
+        <jooq-testcontainers-codegen-maven-plugin.version>0.0.4-SNAPSHOT</jooq-testcontainers-codegen-maven-plugin.version>
         <jooq.version>3.18.3</jooq.version>
         <postgresql.version>42.6.0</postgresql.version>
     </properties>
@@ -61,6 +61,8 @@
                             </database>
                             <liquibase>
                                 <changeLogPath>src/main/resources/db/changelog/db.changelog-root.xml</changeLogPath>
+                                <liquibaseSchemaName>public</liquibaseSchemaName>
+                                <defaultSchemaName>public</defaultSchemaName>
                                 <!-- or
                                <changeLogPath>db.changelog-root.xml</changeLogPath>
                                <changeLogDirectory>src/main/resources/db/changelog</changeLogPath>
