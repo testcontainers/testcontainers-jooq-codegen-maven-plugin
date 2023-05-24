@@ -11,8 +11,8 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
 * MariaDB
 * 
 ## Supported migration tools:
-* Flyway
-* Liquibase
+* Flyway - [supported properties](https://flywaydb.org/documentation/configuration/parameters/ )
+* Liquibase - [supported properties](src/main/java/org/testcontainers/jooq/codegen/migration/runner/LiquibaseRunner.java)
 
 ## How to use?
 
@@ -26,7 +26,7 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <testcontainers.version>1.18.1</testcontainers.version>
-        <jooq-testcontainers-codegen-maven-plugin.version>0.0.3</jooq-testcontainers-codegen-maven-plugin.version>
+        <jooq-testcontainers-codegen-maven-plugin.version>0.0.2</jooq-testcontainers-codegen-maven-plugin.version>
         <jooq.version>3.18.3</jooq.version>
         <postgresql.version>42.6.0</postgresql.version>
     </properties>
@@ -94,8 +94,8 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
                                 </locations>
                             </flyway>
                             <!-- or
-                            Now supports only changeLogPath and changeLogDirectory,as Liquibase doesn't have
-                             generic properties map
+                            Now supports only most useful properties which you can find in LiquibaseRunner.java
+                            https://docs.liquibase.com/concepts/connections/creating-config-properties.html
                             <liquibase>
                                <changeLogPath>db.changelog-root.xml</changeLogPath>
                                <changeLogDirectory>src/main/resources/db/changelog</changeLogPath>
