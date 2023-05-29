@@ -21,10 +21,14 @@ import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.Jdbc;
 import org.jooq.meta.jaxb.Target;
+import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.jooq.codegen.database.DatabaseProps;
 import org.testcontainers.jooq.codegen.database.DatabaseProvider;
-import org.testcontainers.jooq.codegen.migration.runner.*;
+import org.testcontainers.jooq.codegen.migration.runner.FlywayRunner;
+import org.testcontainers.jooq.codegen.migration.runner.LiquibaseRunner;
+import org.testcontainers.jooq.codegen.migration.runner.MigrationRunner;
+import org.testcontainers.jooq.codegen.migration.runner.RunnerProperties;
 
 /**
  * Plugin entry point.
@@ -67,7 +71,7 @@ public class Plugin extends AbstractMojo {
         ClassLoader oldCL = Thread.currentThread().getContextClassLoader();
         URLClassLoader mavenClassloader = getMavenClassloader();
 
-        JdbcDatabaseContainer<?> container = null;
+        var oContainer = Optional.<JdbcDatabaseContainer<?>>empty();
         try {
             String jdbcUrl;
             String username;
@@ -80,9 +84,9 @@ public class Plugin extends AbstractMojo {
                     || this.jdbc.getUrl() == null
                     || this.jdbc.getUsername() == null
                     || this.jdbc.getPassword() == null) {
-                container = DatabaseProvider.getDatabaseContainer(database);
+                var container = DatabaseProvider.getDatabaseContainer(database);
                 container.start();
-
+                oContainer = Optional.ofNullable(container);
                 jdbcUrl = container.getJdbcUrl();
                 username = container.getUsername();
                 password = container.getPassword();
@@ -94,6 +98,7 @@ public class Plugin extends AbstractMojo {
                 driver = DriverManager.getDriver(jdbcUrl);
             }
 
+            var properties = new RunnerProperties(jdbcUrl, username, password, driver, mavenClassloader, project);
             Thread.currentThread().setContextClassLoader(mavenClassloader);
             String actualBasedir = basedir == null ? project.getBasedir().getAbsolutePath() : basedir;
 
@@ -117,8 +122,6 @@ public class Plugin extends AbstractMojo {
                         "Both configurations for migration tool are provided, pick either flyway or liquibase");
             }
 
-            RunnerProperties properties =
-                    new RunnerProperties(jdbcUrl, username, password, driver, mavenClassloader, project);
             oLiquibase
                     .or(() -> oFlyway)
                     .orElseThrow(() -> new IllegalArgumentException("Neither liquibase nor flyway provided!"))
@@ -139,9 +142,7 @@ public class Plugin extends AbstractMojo {
             throw new MojoExecutionException("Error running jOOQ code generation tool", ex);
         } finally {
             try {
-                if (container != null) {
-                    container.stop();
-                }
+                oContainer.ifPresent(GenericContainer::stop);
             } catch (Throwable e) {
                 getLog().error("Couldn't stop the container.", e);
             }
@@ -175,7 +176,10 @@ public class Plugin extends AbstractMojo {
     private URLClassLoader getMavenClassloader() throws MojoExecutionException {
         try {
             List<String> classpathElements = project.getRuntimeClasspathElements();
-            URL urls[] = new URL[classpathElements.size()];
+            if (classpathElements == null) {
+                classpathElements = List.of();
+            }
+            URL[] urls = new URL[classpathElements.size()];
 
             for (int i = 0; i < urls.length; i++) {
                 urls[i] = new File(classpathElements.get(i)).toURI().toURL();
