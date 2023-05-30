@@ -50,7 +50,7 @@ public class Plugin extends AbstractMojo {
     @Parameter
     private org.jooq.meta.jaxb.Generator generator;
 
-    @Parameter
+    @Parameter(required = true)
     private DatabaseProps database;
 
     @Parameter
@@ -66,6 +66,9 @@ public class Plugin extends AbstractMojo {
             return;
         }
 
+        if (database.getType() == null) {
+            throw new MojoExecutionException("Property 'type' should be specified inside 'database' block");
+        }
         checkGeneratorArguments();
 
         ClassLoader oldCL = Thread.currentThread().getContextClassLoader();

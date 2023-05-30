@@ -1,7 +1,5 @@
 package org.testcontainers.jooq.codegen.database;
 
-import static org.testcontainers.jooq.codegen.database.DatabaseType.*;
-
 import java.util.Optional;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MariaDBContainer;
@@ -18,19 +16,13 @@ public class DatabaseProvider {
      */
     public static JdbcDatabaseContainer<?> getDatabaseContainer(DatabaseProps props) {
         DatabaseType dbType = props.getType();
-        Optional<String> image = Optional.ofNullable(props.getContainerImage());
-        JdbcDatabaseContainer<?> container;
-        try {
-            switch (dbType) {
-                case POSTGRES -> container = new PostgreSQLContainer<>(image.orElse(POSTGRES.getDefaultImage()));
-                case MARIADB -> container = new MariaDBContainer<>(image.orElse(MARIADB.getDefaultImage()));
-                case MYSQL -> container = new MySQLContainer<>(image.orElse(MYSQL.getDefaultImage()));
-                default -> throw new IllegalArgumentException("Unsupported DatabaseType: " + dbType);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Unable to instantiate database using Testcontainers", e);
-        }
+        String image = Optional.ofNullable(props.getContainerImage()).orElse(dbType.getDefaultImage());
+        JdbcDatabaseContainer<?> container =
+                switch (dbType) {
+                    case POSTGRES -> new PostgreSQLContainer<>(image);
+                    case MARIADB -> new MariaDBContainer<>(image);
+                    case MYSQL -> new MySQLContainer<>(image);
+                };
         if (isNotEmpty(props.getUsername())) {
             container.withUsername(props.getUsername());
         }
