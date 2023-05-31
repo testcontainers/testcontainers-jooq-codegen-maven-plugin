@@ -1,33 +1,77 @@
 package org.testcontainers.jooq.codegen;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static assertions.SchemaAssert.assertThatDefaultSchema;
+import static assertions.SchemaAssert.assertThatSchema;
+import static common.Common.GENERATED_ROOT_DIR;
 
 import java.io.File;
-import java.nio.file.Path;
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
+/**
+ * Integration test plugin under real pom files
+ */
 public class PluginTest extends AbstractMojoTestCase {
 
-    private final Path generatedSourcesRoot = Path.of("target/generated-sources/jooq");
-    private final Path generatedSourcesPath = generatedSourcesRoot.resolve("org/jooq/codegen/maven/test");
-    private final Path tablesDir = generatedSourcesPath.resolve("tables");
-    private final File generatedRootDir = generatedSourcesRoot.toFile();
+    /**
+     * Cleanup generated sources
+     */
+    @Override
+    public void tearDown() throws Exception {
+        super.tearDown();
+        FileUtils.deleteDirectory(GENERATED_ROOT_DIR);
+    }
 
     public void testPostgresFlyway() throws Exception {
         // given
-        File pom = getTestFile("src/test/resources/pom/pom.xml");
+        File pom = getTestPom("postgres-flyway-pom.xml");
 
         // when
-        Plugin myMojo = (Plugin) lookupMojo("generate", pom);
-        myMojo.execute();
+        lookupMojo("generate", pom).execute();
 
         // then
-        assertThat(tablesDir).isNotEmptyDirectory();
-        assertThat(tablesDir.resolve("Users.java")).isNotEmptyFile();
-        assertThat(generatedSourcesPath.resolve("Public.java")).isNotEmptyFile();
+        assertThatDefaultSchema().containsTable("Users.java");
+        assertThatDefaultSchema().containsTable("FlywaySchemaHistory.java");
+    }
 
-        // clean
-        FileUtils.deleteDirectory(generatedRootDir);
+    public void testPostgresLiquibase() throws Exception {
+        // given
+        File pom = getTestPom("postgres-liquibase-pom.xml");
+
+        // when
+        lookupMojo("generate", pom).execute();
+
+        // then
+        assertThatSchema("custom").containsTable("Person.java");
+        assertThatSchema("custom").containsTable("Users.java");
+        assertThatSchema("public_").containsTable("Databasechangelog.java");
+    }
+
+    public void testMysqlFlyway() throws Exception {
+        // given
+        File pom = getTestPom("mysql-flyway-pom.xml");
+
+        // when
+        lookupMojo("generate", pom).execute();
+
+        // then
+        assertThatSchema("test").containsTable("Users.java");
+        assertThatSchema("test").containsTable("FlywaySchemaHistory.java");
+    }
+
+    public void testMariadbLiquibase() throws Exception {
+        // given
+        File pom = getTestPom("mariadb-liquibase-pom.xml");
+
+        // when
+        lookupMojo("generate", pom).execute();
+
+        // then
+        assertThatSchema("test").containsTable("Users.java");
+        assertThatSchema("test").containsTable("Databasechangelog.java");
+    }
+
+    private File getTestPom(String filename) {
+        return getTestFile("src/test/resources/pom/%s".formatted(filename));
     }
 }

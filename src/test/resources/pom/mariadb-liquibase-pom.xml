@@ -82,22 +82,22 @@
                         <version implementation="java.lang.String">1.0.0-SNAPSHOT</version>
                     </project>
                     <database>
-                        <type>POSTGRES</type>
-                        <containerImage>postgres:15-alpine</containerImage>
+                        <type>MARIADB</type>
                         <username>test</username>
                         <password>test</password>
                         <databaseName>test</databaseName>
                     </database>
-                    <flyway>
-                        <locations>
-                            filesystem:src/test/resources/db/migration/postgres
-                        </locations>
-                    </flyway>
+                    <liquibase>
+                        <changeLogDirectory>
+                            src/test/resources/db/changelog/mariadb
+                        </changeLogDirectory>
+                        <changeLogPath>
+                            db.changelog-root.xml
+                        </changeLogPath>
+                    </liquibase>
                     <generator>
                         <database>
                             <includes>.*</includes>
-                            <excludes>flyway_schema_history</excludes>
-                            <inputSchema>public</inputSchema>
                         </database>
                         <target>
                             <packageName>org.jooq.codegen.maven.test</packageName>
