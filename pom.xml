@@ -7,7 +7,7 @@
 
     <groupId>org.testcontainers</groupId>
     <artifactId>jooq-testcontainers-codegen-maven-plugin</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <packaging>maven-plugin</packaging>
     <name>jooq-testcontainers-codegen-maven-plugin</name>
     <description>jOOQ code generator using Testcontainers</description>
@@ -63,6 +63,7 @@
         <mariadb-java-client.version>3.1.2</mariadb-java-client.version>
         <assertj-core.version>3.24.2</assertj-core.version>
         <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
+        <junit-vintage-engine.version>5.9.3</junit-vintage-engine.version>
     </properties>
 
     <dependencies>
@@ -179,6 +180,12 @@
             <version>${assertj-core.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>${junit-vintage-engine.version}</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
@@ -287,6 +294,19 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <dependenciesToScan>
+                        <dependency>org.junit.vintage:junit-vintage-engine</dependency>
+                    </dependenciesToScan>
+<!--                    <includes>-->
+<!--                        <include>**/JUnit3Runner.java</include>-->
+<!--                    </includes>-->
+                </configuration>
             </plugin>
         </plugins>
     </build>
