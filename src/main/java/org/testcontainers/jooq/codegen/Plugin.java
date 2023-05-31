@@ -24,7 +24,10 @@ import org.jooq.meta.jaxb.Target;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.jooq.codegen.database.DatabaseProps;
 import org.testcontainers.jooq.codegen.database.DatabaseProvider;
-import org.testcontainers.jooq.codegen.migration.runner.*;
+import org.testcontainers.jooq.codegen.migration.runner.FlywayRunner;
+import org.testcontainers.jooq.codegen.migration.runner.LiquibaseRunner;
+import org.testcontainers.jooq.codegen.migration.runner.MigrationRunner;
+import org.testcontainers.jooq.codegen.migration.runner.RunnerProperties;
 
 /**
  * Plugin entry point.
@@ -46,7 +49,7 @@ public class Plugin extends AbstractMojo {
     @Parameter
     private org.jooq.meta.jaxb.Generator generator;
 
-    @Parameter
+    @Parameter(required = true)
     private DatabaseProps database;
 
     @Parameter
@@ -62,6 +65,9 @@ public class Plugin extends AbstractMojo {
             return;
         }
 
+        if (database.getType() == null) {
+            throw new MojoExecutionException("Property 'type' should be specified inside 'database' block");
+        }
         checkGeneratorArguments();
 
         ClassLoader oldCL = Thread.currentThread().getContextClassLoader();
@@ -82,7 +88,6 @@ public class Plugin extends AbstractMojo {
                     || this.jdbc.getPassword() == null) {
                 container = DatabaseProvider.getDatabaseContainer(database);
                 container.start();
-
                 jdbcUrl = container.getJdbcUrl();
                 username = container.getUsername();
                 password = container.getPassword();
@@ -94,6 +99,7 @@ public class Plugin extends AbstractMojo {
                 driver = DriverManager.getDriver(jdbcUrl);
             }
 
+            var properties = new RunnerProperties(jdbcUrl, username, password, driver, mavenClassloader, project);
             Thread.currentThread().setContextClassLoader(mavenClassloader);
             String actualBasedir = basedir == null ? project.getBasedir().getAbsolutePath() : basedir;
 
@@ -117,8 +123,6 @@ public class Plugin extends AbstractMojo {
                         "Both configurations for migration tool are provided, pick either flyway or liquibase");
             }
 
-            RunnerProperties properties =
-                    new RunnerProperties(jdbcUrl, username, password, driver, mavenClassloader, project);
             oLiquibase
                     .or(() -> oFlyway)
                     .orElseThrow(() -> new IllegalArgumentException("Neither liquibase nor flyway provided!"))
@@ -175,7 +179,10 @@ public class Plugin extends AbstractMojo {
     private URLClassLoader getMavenClassloader() throws MojoExecutionException {
         try {
             List<String> classpathElements = project.getRuntimeClasspathElements();
-            URL urls[] = new URL[classpathElements.size()];
+            if (classpathElements == null) {
+                classpathElements = List.of();
+            }
+            URL[] urls = new URL[classpathElements.size()];
 
             for (int i = 0; i < urls.length; i++) {
                 urls[i] = new File(classpathElements.get(i)).toURI().toURL();
