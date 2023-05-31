@@ -1,17 +1,5 @@
 package org.testcontainers.jooq.codegen;
 
-import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
-import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
-import static org.jooq.Constants.XSD_CODEGEN;
-import static org.jooq.codegen.GenerationTool.DEFAULT_TARGET_DIRECTORY;
-
-import java.io.File;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.util.List;
-import java.util.Optional;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -21,7 +9,6 @@ import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.Jdbc;
 import org.jooq.meta.jaxb.Target;
-import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.jooq.codegen.database.DatabaseProps;
 import org.testcontainers.jooq.codegen.database.DatabaseProvider;
@@ -29,6 +16,19 @@ import org.testcontainers.jooq.codegen.migration.runner.FlywayRunner;
 import org.testcontainers.jooq.codegen.migration.runner.LiquibaseRunner;
 import org.testcontainers.jooq.codegen.migration.runner.MigrationRunner;
 import org.testcontainers.jooq.codegen.migration.runner.RunnerProperties;
+
+import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.util.List;
+import java.util.Optional;
+
+import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
+import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
+import static org.jooq.Constants.XSD_CODEGEN;
+import static org.jooq.codegen.GenerationTool.DEFAULT_TARGET_DIRECTORY;
 
 /**
  * Plugin entry point.
@@ -74,7 +74,7 @@ public class Plugin extends AbstractMojo {
         ClassLoader oldCL = Thread.currentThread().getContextClassLoader();
         URLClassLoader mavenClassloader = getMavenClassloader();
 
-        var oContainer = Optional.<JdbcDatabaseContainer<?>>empty();
+        JdbcDatabaseContainer<?> container = null;
         try {
             String jdbcUrl;
             String username;
@@ -87,9 +87,8 @@ public class Plugin extends AbstractMojo {
                     || this.jdbc.getUrl() == null
                     || this.jdbc.getUsername() == null
                     || this.jdbc.getPassword() == null) {
-                var container = DatabaseProvider.getDatabaseContainer(database);
+                container = DatabaseProvider.getDatabaseContainer(database);
                 container.start();
-                oContainer = Optional.ofNullable(container);
                 jdbcUrl = container.getJdbcUrl();
                 username = container.getUsername();
                 password = container.getPassword();
@@ -145,7 +144,9 @@ public class Plugin extends AbstractMojo {
             throw new MojoExecutionException("Error running jOOQ code generation tool", ex);
         } finally {
             try {
-                oContainer.ifPresent(GenericContainer::stop);
+                if (container != null) {
+                    container.stop();
+                }
             } catch (Throwable e) {
                 getLog().error("Couldn't stop the container.", e);
             }
