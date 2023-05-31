@@ -1,5 +1,17 @@
 package org.testcontainers.jooq.codegen;
 
+import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
+import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
+import static org.jooq.Constants.XSD_CODEGEN;
+import static org.jooq.codegen.GenerationTool.DEFAULT_TARGET_DIRECTORY;
+
+import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.util.List;
+import java.util.Optional;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -16,19 +28,6 @@ import org.testcontainers.jooq.codegen.migration.runner.FlywayRunner;
 import org.testcontainers.jooq.codegen.migration.runner.LiquibaseRunner;
 import org.testcontainers.jooq.codegen.migration.runner.MigrationRunner;
 import org.testcontainers.jooq.codegen.migration.runner.RunnerProperties;
-
-import java.io.File;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.util.List;
-import java.util.Optional;
-
-import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
-import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
-import static org.jooq.Constants.XSD_CODEGEN;
-import static org.jooq.codegen.GenerationTool.DEFAULT_TARGET_DIRECTORY;
 
 /**
  * Plugin entry point.
