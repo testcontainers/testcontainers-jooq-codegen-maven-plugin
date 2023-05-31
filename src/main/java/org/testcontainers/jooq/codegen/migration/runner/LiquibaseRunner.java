@@ -21,20 +21,18 @@ import liquibase.resource.SearchPathResourceAccessor;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Parameter;
 
-/**
- * Liquibase runner
- */
+/** Liquibase runner */
 public class LiquibaseRunner implements MigrationRunner {
 
     /**
-     * Required property <br/>
+     * Required property <br>
      * Example: src/main/resources/db/changelog/db.changelog-root.xml
      */
     @Parameter(name = "liquibase.changeLogPath", required = true)
     private String changeLogPath;
 
     /**
-     * Optional <br/>
+     * Optional <br>
      * Default: project.basedir
      */
     @Parameter(name = "liquibase.changeLogDirectory")

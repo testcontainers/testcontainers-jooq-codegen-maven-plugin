@@ -6,14 +6,10 @@ import org.testcontainers.containers.MariaDBContainer;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 
-/**
- * DatabaseProvider provides container instance for a given DatabaseType
- */
+/** DatabaseProvider provides container instance for a given DatabaseType */
 public class DatabaseProvider {
 
-    /**
-     * Instantiates a Docker container using Testcontainers for the given database type.
-     */
+    /** Instantiates a Docker container using Testcontainers for the given database type. */
     public static JdbcDatabaseContainer<?> getDatabaseContainer(DatabaseProps props) {
         DatabaseType dbType = props.getType();
         String image = Optional.ofNullable(props.getContainerImage()).orElse(dbType.getDefaultImage());

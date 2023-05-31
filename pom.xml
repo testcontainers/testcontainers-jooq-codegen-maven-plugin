@@ -38,33 +38,33 @@
         <tag>HEAD</tag>
     </scm>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>17</java.version>
-        <spotless-maven-plugin.version>2.36.0</spotless-maven-plugin.version>
-        <maven-plugin-api.version>3.9.0</maven-plugin-api.version>
-        <maven-plugin-annotations.version>3.8.1</maven-plugin-annotations.version>
-        <maven-project.version>2.2.1</maven-project.version>
-        <maven-core.version>3.9.0</maven-core.version>
-        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
-        <maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
-        <maven-plugin-tools-annotations.version>3.6.1</maven-plugin-tools-annotations.version>
-        <testcontainers.version>1.18.1</testcontainers.version>
-        <flyway-core.version>9.16.3</flyway-core.version>
-        <liquibase-core.version>4.22.0</liquibase-core.version>
-        <junit-jupiter.version>5.9.3</junit-jupiter.version>
-        <jooq.version>3.18.3</jooq.version>
-        <junit.version>4.13.2</junit.version>
-        <postgresql.version>42.6.0</postgresql.version>
-        <mysql-connector-j.version>8.0.32</mysql-connector-j.version>
-        <mariadb-java-client.version>3.1.2</mariadb-java-client.version>
-        <assertj-core.version>3.24.2</assertj-core.version>
-        <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
-        <junit-vintage-engine.version>5.9.3</junit-vintage-engine.version>
-    </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>17</java.version>
+		<spotless-maven-plugin.version>2.36.0</spotless-maven-plugin.version>
+		<maven-plugin-api.version>3.9.0</maven-plugin-api.version>
+		<maven-plugin-annotations.version>3.8.1</maven-plugin-annotations.version>
+		<maven-project.version>2.2.1</maven-project.version>
+		<maven-core.version>3.9.0</maven-core.version>
+		<maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+		<maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+		<maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
+		<maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
+		<maven-plugin-tools-annotations.version>3.6.1</maven-plugin-tools-annotations.version>
+		<testcontainers.version>1.18.1</testcontainers.version>
+		<flyway-core.version>9.16.3</flyway-core.version>
+		<liquibase-core.version>4.22.0</liquibase-core.version>
+		<junit-jupiter.version>5.9.3</junit-jupiter.version>
+		<jooq.version>3.18.3</jooq.version>
+		<junit.version>4.13.2</junit.version>
+		<postgresql.version>42.6.0</postgresql.version>
+		<mysql-connector-j.version>8.0.32</mysql-connector-j.version>
+		<mariadb-java-client.version>3.1.2</mariadb-java-client.version>
+		<assertj-core.version>3.24.2</assertj-core.version>
+		<maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
+		<junit-vintage-engine.version>5.9.3</junit-vintage-engine.version>
+	</properties>
 
     <dependencies>
         <dependency>

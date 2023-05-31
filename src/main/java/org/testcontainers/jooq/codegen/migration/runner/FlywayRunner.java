@@ -5,9 +5,7 @@ import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.flywaydb.core.internal.configuration.ConfigUtils;
 
-/**
- * Map with flyway properties, each added property will be prefixed with "flyway"
- */
+/** Map with flyway properties, each added property will be prefixed with "flyway" */
 public class FlywayRunner extends HashMap<String, String> implements MigrationRunner {
 
     @Override

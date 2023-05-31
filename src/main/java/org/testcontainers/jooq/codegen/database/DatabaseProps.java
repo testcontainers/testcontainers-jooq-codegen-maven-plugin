@@ -1,8 +1,6 @@
 package org.testcontainers.jooq.codegen.database;
 
-/**
- * Database configuration properties.
- */
+/** Database configuration properties. */
 public class DatabaseProps {
     private DatabaseType type;
     private String containerImage;
