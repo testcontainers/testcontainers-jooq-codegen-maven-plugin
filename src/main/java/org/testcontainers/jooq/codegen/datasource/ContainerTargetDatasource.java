@@ -4,12 +4,15 @@ import java.sql.Driver;
 import java.util.Objects;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 
-/** Containerized target datasource */
+/**
+ * Containerized target datasource
+ */
 public final class ContainerTargetDatasource extends TargetDatasource {
     private final JdbcDatabaseContainer<?> container;
 
     public ContainerTargetDatasource(JdbcDatabaseContainer<?> container) {
         this.container = Objects.requireNonNull(container);
+        this.container.start();
     }
 
     @Override
