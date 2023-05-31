@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import org.jooq.meta.jaxb.Jdbc;
 
 /** Datasource using provided parameters */
-public final class ExistingTargetDatasource extends TargetDatasource {
+public final class ExistingTargetDatasource implements TargetDatasource {
     private final Jdbc jdbc;
 
     public ExistingTargetDatasource(Jdbc jdbc) {

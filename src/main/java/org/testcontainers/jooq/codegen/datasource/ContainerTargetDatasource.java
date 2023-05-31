@@ -7,7 +7,7 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 /**
  * Containerized target datasource
  */
-public final class ContainerTargetDatasource extends TargetDatasource {
+public final class ContainerTargetDatasource implements TargetDatasource {
     private final JdbcDatabaseContainer<?> container;
 
     public ContainerTargetDatasource(JdbcDatabaseContainer<?> container) {

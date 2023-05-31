@@ -9,7 +9,7 @@ import org.testcontainers.jooq.codegen.database.DatabaseProps;
 import org.testcontainers.jooq.codegen.database.DatabaseProvider;
 
 /** Datasource to migrate and generate sources on */
-public abstract class TargetDatasource implements AutoCloseable {
+public interface TargetDatasource extends AutoCloseable {
 
     public static TargetDatasource createOrJoinExisting(Jdbc jdbc, DatabaseProps database) {
         if (needSpinContainer(jdbc)) {
@@ -28,11 +28,11 @@ public abstract class TargetDatasource implements AutoCloseable {
                 .test(jdbc);
     }
 
-    public abstract String getUrl();
+    String getUrl();
 
-    public abstract String getUsername();
+    String getUsername();
 
-    public abstract String getPassword();
+    String getPassword();
 
-    public abstract Driver getDriver() throws SQLException;
+    Driver getDriver() throws SQLException;
 }
