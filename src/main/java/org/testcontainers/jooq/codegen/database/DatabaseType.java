@@ -1,8 +1,6 @@
 package org.testcontainers.jooq.codegen.database;
 
-/**
- * Database Types supported by the plugin
- */
+/** Database Types supported by the plugin */
 public enum DatabaseType {
     POSTGRES("postgres:15.2-alpine"),
     MYSQL("mysql:8.0.33"),

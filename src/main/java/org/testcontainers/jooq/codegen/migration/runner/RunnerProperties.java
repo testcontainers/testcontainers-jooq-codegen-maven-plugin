@@ -72,12 +72,8 @@ public final class RunnerProperties {
 
     @Override
     public String toString() {
-        return "RunnerProperties[" + "jdbcUrl="
-                + jdbcUrl + ", " + "username="
-                + username + ", " + "password="
-                + password + ", " + "driver="
-                + driver + ", " + "mavenClassloader="
-                + mavenClassloader + ", " + "mavenProject="
-                + mavenProject + ']';
+        return "RunnerProperties[" + "jdbcUrl=" + jdbcUrl + ", " + "username=" + username + ", "
+                + "password=" + password + ", " + "driver=" + driver + ", " + "mavenClassloader="
+                + mavenClassloader + ", " + "mavenProject=" + mavenProject + ']';
     }
 }
