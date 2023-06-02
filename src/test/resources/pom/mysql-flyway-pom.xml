@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.testcontainers</groupId>
+    <artifactId>jooq-testcontainers-codegen-maven-plugin-test</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <properties>
+        <java.version>17</java.version>
+        <testcontainers.version>1.18.1</testcontainers.version>
+        <jooq-testcontainers-codegen-maven-plugin.version>0.0.2</jooq-testcontainers-codegen-maven-plugin.version>
+        <jooq.version>3.18.3</jooq.version>
+        <postgresql.version>42.6.0</postgresql.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-codegen</artifactId>
+            <version>${jooq.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+            <version>${jooq.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>jooq-testcontainers-codegen-maven-plugin</artifactId>
+            <version>${jooq-testcontainers-codegen-maven-plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-core</artifactId>
+            <version>3.9.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>jooq-testcontainers-codegen-maven-plugin</artifactId>
+                <version>${jooq-testcontainers-codegen-maven-plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.testcontainers</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>${testcontainers.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>${postgresql.version}</version>
+                    </dependency>
+                </dependencies>
+                <goals>
+                    <goal>generate</goal>
+                </goals>
+                <executions>
+                    <execution>
+                        <id>generate</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <project implementation="org.apache.maven.plugin.testing.stubs.MavenProjectStub">
+                        <groupId implementation="java.lang.String">test-group-id</groupId>
+                        <artifactId implementation="java.lang.String">test-artifact-id</artifactId>
+                        <version implementation="java.lang.String">1.0.0-SNAPSHOT</version>
+                    </project>
+                    <database>
+                        <type>MYSQL</type>
+                    </database>
+                    <flyway>
+                        <locations>
+                            filesystem:src/test/resources/db/migration/mysql
+                        </locations>
+                    </flyway>
+                    <generator>
+                        <database>
+                            <includes>.*</includes>
+                        </database>
+                        <target>
+                            <packageName>org.jooq.codegen.maven.test</packageName>
+                            <directory>target/generated-sources/jooq</directory>
+                        </target>
+                    </generator>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
