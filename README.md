@@ -104,17 +104,20 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
                                 You can configure any supporting jooq config here. 
                                 see https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration/
                             -->
-                            <generator>
-                                <database>
-                                    <includes>.*</includes>
-                                    <excludes>flyway_schema_history</excludes>
-                                    <inputSchema>public</inputSchema>
-                                </database>
-                                <target>
-                                    <packageName>org.jooq.codegen.maven.example</packageName>
-                                    <directory>target/generated-sources/jooq</directory>
-                                </target>
-                            </generator>
+                            <jooq>
+                                <skip>false</skip>  <!-- optional -->
+                                <generator>
+                                    <database>
+                                        <includes>.*</includes>
+                                        <excludes>flyway_schema_history</excludes>
+                                        <inputSchema>public</inputSchema>
+                                    </database>
+                                    <target>
+                                        <packageName>org.jooq.codegen.maven.example</packageName>
+                                        <directory>target/generated-sources/jooq</directory>
+                                    </target>
+                                </generator>
+                            </jooq>
                         </configuration>
                     </execution>
                 </executions>

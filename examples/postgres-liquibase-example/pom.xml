@@ -70,17 +70,20 @@
                             </liquibase>
 
                             <!-- Generator parameters -->
-                            <generator>
-                                <database>
-                                    <includes>.*</includes>
-                                    <excludes>DATABASECHANGELOG</excludes>
-                                    <inputSchema>custom</inputSchema>
-                                </database>
-                                <target>
-                                    <packageName>org.jooq.codegen.maven.example</packageName>
-                                    <directory>target/generated-sources/jooq</directory>
-                                </target>
-                            </generator>
+                            <jooq>
+                                <generator>
+                                    <database>
+                                        <includes>.*</includes>
+                                        <excludes>DATABASECHANGELOG</excludes>
+                                        <inputSchema>custom</inputSchema>
+                                    </database>
+                                    <target>
+                                        <packageName>org.jooq.codegen.maven.example</packageName>
+                                        <directory>target/generated-sources/jooq</directory>
+                                    </target>
+                                </generator>
+                            </jooq>
+
                         </configuration>
                     </execution>
                 </executions>

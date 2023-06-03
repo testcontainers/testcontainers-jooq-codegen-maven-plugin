@@ -28,6 +28,11 @@
             <name>K Siva Prasad Reddy</name>
             <email>sivaprasadreddy.k@gmail.com</email>
         </developer>
+        <developer>
+            <id>contributor</id>
+            <name>Roman Oborin</name>
+            <email>deadok68@gmail.com</email>
+        </developer>
     </developers>
 
     <scm>
@@ -62,7 +67,7 @@
 		<mysql-connector-j.version>8.0.32</mysql-connector-j.version>
 		<mariadb-java-client.version>3.1.2</mariadb-java-client.version>
 		<assertj-core.version>3.24.2</assertj-core.version>
-		<maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
+		<maven-plugin-testing-harness.version>4.0.0-alpha-1</maven-plugin-testing-harness.version>
 		<junit-vintage-engine.version>5.9.3</junit-vintage-engine.version>
 	</properties>
 

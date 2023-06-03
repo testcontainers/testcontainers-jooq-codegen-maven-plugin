@@ -14,7 +14,8 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <testcontainers.version>1.18.1</testcontainers.version>
-        <jooq-testcontainers-codegen-maven-plugin.version>0.0.2</jooq-testcontainers-codegen-maven-plugin.version>
+        <jooq-testcontainers-codegen-maven-plugin.version>0.0.2
+        </jooq-testcontainers-codegen-maven-plugin.version>
         <jooq.version>3.18.3</jooq.version>
         <postgresql.version>42.6.0</postgresql.version>
     </properties>
@@ -65,18 +66,20 @@
                                     filesystem:src/main/resources/db/migration/postgresql
                                 </locations>
                             </flyway>
-                            <!-- Generator parameters -->
-                            <generator>
-                                <database>
-                                    <includes>.*</includes>
-                                    <excludes>flyway_schema_history</excludes>
-                                    <inputSchema>public</inputSchema>
-                                </database>
-                                <target>
-                                    <packageName>org.jooq.codegen.maven.example</packageName>
-                                    <directory>target/generated-sources/jooq</directory>
-                                </target>
-                            </generator>
+                            <!--                             Generator parameters -->
+                            <jooq>
+                                <generator>
+                                    <database>
+                                        <includes>.*</includes>
+                                        <excludes>flyway_schema_history</excludes>
+                                        <inputSchema>public</inputSchema>
+                                    </database>
+                                    <target>
+                                        <packageName>org.jooq.codegen.maven.example</packageName>
+                                        <directory>target/generated-sources/jooq</directory>
+                                    </target>
+                                </generator>
+                            </jooq>
                         </configuration>
                     </execution>
                 </executions>

@@ -2,8 +2,6 @@ package org.testcontainers.jooq.codegen;
 
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
 import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
-import static org.jooq.Constants.XSD_CODEGEN;
-import static org.jooq.codegen.GenerationTool.DEFAULT_TARGET_DIRECTORY;
 import static org.testcontainers.jooq.codegen.util.OptionalUtils.bothPresent;
 
 import java.io.File;
@@ -11,17 +9,16 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
 import java.util.Optional;
+import javax.inject.Inject;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
-import org.jooq.codegen.GenerationTool;
-import org.jooq.meta.jaxb.Configuration;
-import org.jooq.meta.jaxb.Jdbc;
-import org.jooq.meta.jaxb.Target;
 import org.testcontainers.jooq.codegen.database.DatabaseProps;
 import org.testcontainers.jooq.codegen.datasource.TargetDatasource;
+import org.testcontainers.jooq.codegen.jooq.JooqGenerator;
+import org.testcontainers.jooq.codegen.jooq.JooqProps;
 import org.testcontainers.jooq.codegen.migration.runner.FlywayRunner;
 import org.testcontainers.jooq.codegen.migration.runner.LiquibaseRunner;
 import org.testcontainers.jooq.codegen.migration.runner.MigrationRunner;
@@ -32,23 +29,15 @@ import org.testcontainers.jooq.codegen.migration.runner.RunnerProperties;
  */
 @Mojo(name = "generate", defaultPhase = GENERATE_SOURCES, requiresDependencyResolution = TEST, threadSafe = true)
 public class Plugin extends AbstractMojo {
+
     @Parameter(property = "project", required = true, readonly = true)
     private MavenProject project;
 
-    @Parameter(property = "jooq.codegen.skip")
-    private boolean skip;
-
-    @Parameter(property = "jooq.codegen.basedir")
-    private String basedir;
-
-    @Parameter
-    private org.jooq.meta.jaxb.Jdbc jdbc;
-
-    @Parameter
-    private org.jooq.meta.jaxb.Generator generator;
-
     @Parameter(required = true)
     private DatabaseProps database;
+
+    @Parameter(required = true)
+    private JooqProps jooq;
 
     @Parameter
     private FlywayRunner flyway;
@@ -56,9 +45,12 @@ public class Plugin extends AbstractMojo {
     @Parameter
     private LiquibaseRunner liquibase;
 
+    @Inject
+    private JooqGenerator jooqGenerator;
+
     @Override
     public void execute() throws MojoExecutionException {
-        if (skip) {
+        if (jooq.skip()) {
             getLog().info("Skipping jOOQ code generation");
             return;
         }
@@ -66,18 +58,17 @@ public class Plugin extends AbstractMojo {
         if (database.getType() == null) {
             throw new MojoExecutionException("Property 'type' should be specified inside 'database' block");
         }
-        checkGeneratorArguments();
+
         final var oldCL = Thread.currentThread().getContextClassLoader();
         final var mavenClassloader = getMavenClassloader();
 
-        try (var targetDatasource = TargetDatasource.createOrJoinExisting(jdbc, database)) {
+        try (var targetDatasource = TargetDatasource.createOrJoinExisting(jooq, database)) {
             doExecute(mavenClassloader, targetDatasource);
         } catch (Exception ex) {
             throw new MojoExecutionException("Error running jOOQ code generation tool", ex);
         } finally {
             closeClassloader(oldCL, mavenClassloader);
         }
-        project.addCompileSourceRoot(generator.getTarget().getDirectory());
     }
 
     private void doExecute(URLClassLoader mavenClassloader, TargetDatasource targetDatasource) throws Exception {
@@ -89,16 +80,6 @@ public class Plugin extends AbstractMojo {
                 mavenClassloader,
                 project);
         Thread.currentThread().setContextClassLoader(mavenClassloader);
-        String actualBasedir = basedir == null ? project.getBasedir().getAbsolutePath() : basedir;
-
-        setGeneratorTargets();
-
-        if (jdbc == null) {
-            jdbc = new Jdbc();
-        }
-        jdbc.setUrl(targetDatasource.getUrl());
-        jdbc.setUser(targetDatasource.getUsername());
-        jdbc.setPassword(targetDatasource.getPassword());
 
         final var oFlyway = Optional.<MigrationRunner>ofNullable(flyway);
         final var oLiquibase = Optional.<MigrationRunner>ofNullable(liquibase);
@@ -118,15 +99,7 @@ public class Plugin extends AbstractMojo {
 
         getLog().info("Migrations applied successfully");
 
-        final var configuration = new Configuration();
-        configuration.setJdbc(jdbc);
-        configuration.setGenerator(generator);
-        configuration.setBasedir(actualBasedir);
-
-        if (getLog().isDebugEnabled()) {
-            getLog().debug("Using this configuration:\n" + configuration);
-        }
-        GenerationTool.generate(configuration);
+        jooqGenerator.generateSources(targetDatasource, jooq, getLog());
     }
 
     private void closeClassloader(ClassLoader oldCL, URLClassLoader mavenClassloader) {
@@ -135,31 +108,6 @@ public class Plugin extends AbstractMojo {
             mavenClassloader.close();
         } catch (Throwable e) {
             getLog().error("Couldn't close the classloader.", e);
-        }
-    }
-
-    private void setGeneratorTargets() {
-        if (generator.getTarget() == null) {
-            generator.setTarget(new Target());
-        }
-        if (generator.getTarget().getDirectory() == null) {
-            generator.getTarget().setDirectory(DEFAULT_TARGET_DIRECTORY);
-        }
-    }
-
-    private void checkGeneratorArguments() throws MojoExecutionException {
-        if (generator == null) {
-            getLog().error("Incorrect configuration of jOOQ code generation tool");
-            getLog().error(
-                            """
-                            The jOOQ-codegen-maven module's generator configuration is not set up correctly.
-                            This can have a variety of reasons, among which:
-                            - Your pom.xml's <configuration> contains invalid XML according to %s
-                            - There is a version or artifact mismatch between your pom.xml and your commandline"""
-                                    .formatted(XSD_CODEGEN));
-
-            throw new MojoExecutionException(
-                    "Incorrect configuration of jOOQ code generation tool. See error above for details.");
         }
     }
 
