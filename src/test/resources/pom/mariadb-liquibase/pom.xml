@@ -11,7 +11,8 @@
     <properties>
         <java.version>17</java.version>
         <testcontainers.version>1.18.1</testcontainers.version>
-        <jooq-testcontainers-codegen-maven-plugin.version>0.0.2</jooq-testcontainers-codegen-maven-plugin.version>
+        <jooq-testcontainers-codegen-maven-plugin.version>0.0.2
+        </jooq-testcontainers-codegen-maven-plugin.version>
         <jooq.version>3.18.3</jooq.version>
         <postgresql.version>42.6.0</postgresql.version>
     </properties>
@@ -76,11 +77,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <project implementation="org.apache.maven.plugin.testing.stubs.MavenProjectStub">
-                        <groupId implementation="java.lang.String">test-group-id</groupId>
-                        <artifactId implementation="java.lang.String">test-artifact-id</artifactId>
-                        <version implementation="java.lang.String">1.0.0-SNAPSHOT</version>
-                    </project>
                     <database>
                         <type>MARIADB</type>
                         <username>test</username>
@@ -95,15 +91,17 @@
                             db.changelog-root.xml
                         </changeLogPath>
                     </liquibase>
-                    <generator>
-                        <database>
-                            <includes>.*</includes>
-                        </database>
-                        <target>
-                            <packageName>org.jooq.codegen.maven.test</packageName>
-                            <directory>target/generated-sources/jooq</directory>
-                        </target>
-                    </generator>
+                    <jooq>
+                        <generator>
+                            <database>
+                                <includes>.*</includes>
+                            </database>
+                            <target>
+                                <packageName>org.jooq.codegen.maven.test</packageName>
+                                <directory>target/generated-sources/jooq</directory>
+                            </target>
+                        </generator>
+                    </jooq>
                 </configuration>
             </plugin>
         </plugins>

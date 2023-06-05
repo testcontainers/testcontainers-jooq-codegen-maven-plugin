@@ -7,20 +7,24 @@ import java.util.function.Predicate;
 import org.jooq.meta.jaxb.Jdbc;
 import org.testcontainers.jooq.codegen.database.DatabaseProps;
 import org.testcontainers.jooq.codegen.database.DatabaseProvider;
+import org.testcontainers.jooq.codegen.jooq.JooqProps;
 
-/** Datasource to migrate and generate sources on */
+/**
+ * Datasource to migrate and generate sources on
+ */
 public interface TargetDatasource extends AutoCloseable {
 
-    public static TargetDatasource createOrJoinExisting(Jdbc jdbc, DatabaseProps database) {
-        if (needSpinContainer(jdbc)) {
+    static TargetDatasource createOrJoinExisting(JooqProps jooq, DatabaseProps database) {
+        if (needSpinContainer(jooq)) {
             var databaseContainer = DatabaseProvider.getDatabaseContainer(database);
             return new ContainerTargetDatasource(databaseContainer);
         }
 
-        return new ExistingTargetDatasource(jdbc);
+        return new ExistingTargetDatasource(jooq.getJdbc());
     }
 
-    private static boolean needSpinContainer(Jdbc jdbc) {
+    private static boolean needSpinContainer(JooqProps jooq) {
+        final var jdbc = jooq.getJdbc();
         return ((Predicate<Jdbc>) Objects::isNull)
                 .or(props -> props.getUrl() == null)
                 .or(props -> props.getUser() == null)

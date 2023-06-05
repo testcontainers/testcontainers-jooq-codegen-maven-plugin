@@ -76,11 +76,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <project implementation="org.apache.maven.plugin.testing.stubs.MavenProjectStub">
-                        <groupId implementation="java.lang.String">test-group-id</groupId>
-                        <artifactId implementation="java.lang.String">test-artifact-id</artifactId>
-                        <version implementation="java.lang.String">1.0.0-SNAPSHOT</version>
-                    </project>
                     <database>
                         <type>POSTGRES</type>
                         <containerImage>postgres:15-alpine</containerImage>
@@ -88,31 +83,23 @@
                         <password>test</password>
                         <databaseName>test</databaseName>
                     </database>
-                    <liquibase>
-                        <changeLogDirectory>
-                            src/test/resources/db/changelog/postgres
-                        </changeLogDirectory>
-                        <changeLogPath>
-                            db.changelog-root.xml
-                        </changeLogPath>
-                    </liquibase>
-                    <generator>
-                        <database>
-                            <includes>.*</includes>
-                            <schemata>
-                                <schema>
-                                    <inputSchema>custom</inputSchema>
-                                </schema>
-                                <schema>
-                                    <inputSchema>public</inputSchema>
-                                </schema>
-                            </schemata>
-                        </database>
-                        <target>
-                            <packageName>org.jooq.codegen.maven.test</packageName>
-                            <directory>target/generated-sources/jooq</directory>
-                        </target>
-                    </generator>
+                    <flyway>
+                        <locations>
+                            filesystem:src/test/resources/db/migration/postgres
+                        </locations>
+                    </flyway>
+                    <jooq>
+                        <generator>
+                            <database>
+                                <includes>.*</includes>
+                                <inputSchema>public</inputSchema>
+                            </database>
+                            <target>
+                                <packageName>org.jooq.codegen.maven.test</packageName>
+                                <directory>target/generated-sources/jooq</directory>
+                            </target>
+                        </generator>
+                    </jooq>
                 </configuration>
             </plugin>
         </plugins>

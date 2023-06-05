@@ -28,6 +28,11 @@
             <name>K Siva Prasad Reddy</name>
             <email>sivaprasadreddy.k@gmail.com</email>
         </developer>
+        <developer>
+            <id>contributor</id>
+            <name>Roman Oborin</name>
+            <email>deadok68@gmail.com</email>
+        </developer>
     </developers>
 
     <scm>

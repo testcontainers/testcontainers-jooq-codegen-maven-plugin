@@ -1,77 +1,84 @@
 package org.testcontainers.jooq.codegen;
 
-import static assertions.SchemaAssert.assertThatDefaultSchema;
-import static assertions.SchemaAssert.assertThatSchema;
-import static common.Common.GENERATED_ROOT_DIR;
+import static assertions.MavenProjectAssert.assertThatProject;
+import static org.codehaus.plexus.PlexusTestCase.getTestFile;
 
-import java.io.File;
-import org.apache.commons.io.FileUtils;
-import org.apache.maven.plugin.testing.AbstractMojoTestCase;
+import org.apache.maven.plugin.testing.MojoRule;
+import org.apache.maven.project.MavenProject;
+import org.junit.Rule;
+import org.junit.Test;
 
 /**
- * Integration test plugin under real pom files
+ * Integration test plugin under real pom files <br/>
+ * Sources by default are generated under the same test pom directory <br/>
+ * You can check them after test runs, nothing gets into final jar
  */
-public class PluginTest extends AbstractMojoTestCase {
+public class PluginTest {
 
-    /**
-     * Cleanup generated sources
-     */
-    @Override
-    public void tearDown() throws Exception {
-        super.tearDown();
-        FileUtils.deleteDirectory(GENERATED_ROOT_DIR);
-    }
+    @Rule
+    public MojoRule mojoRule = new MojoRule();
 
+    @Test
     public void testPostgresFlyway() throws Exception {
         // given
-        File pom = getTestPom("postgres-flyway-pom.xml");
+        MavenProject mavenProject = getMavenProject("postgres-flyway");
 
         // when
-        lookupMojo("generate", pom).execute();
+        mojoRule.lookupConfiguredMojo(mavenProject, "generate").execute();
 
         // then
-        assertThatDefaultSchema().containsTable("Users.java");
-        assertThatDefaultSchema().containsTable("FlywaySchemaHistory.java");
+        assertThatProject(mavenProject)
+                .hasGeneratedJooqTable("Users.java")
+                .hasGeneratedJooqTable("FlywaySchemaHistory.java");
     }
 
+    @Test
     public void testPostgresLiquibase() throws Exception {
         // given
-        File pom = getTestPom("postgres-liquibase-pom.xml");
+        MavenProject mavenProject = getMavenProject("postgres-liquibase");
 
         // when
-        lookupMojo("generate", pom).execute();
+        mojoRule.lookupConfiguredMojo(mavenProject, "generate").execute();
 
         // then
-        assertThatSchema("custom").containsTable("Person.java");
-        assertThatSchema("custom").containsTable("Users.java");
-        assertThatSchema("public_").containsTable("Databasechangelog.java");
+        assertThatProject(mavenProject)
+                .hasGeneratedJooqTable("custom", "Person.java")
+                .hasGeneratedJooqTable("custom", "Users.java")
+                .hasGeneratedJooqTable("public_", "Databasechangelog.java");
     }
 
+    @Test
     public void testMysqlFlyway() throws Exception {
         // given
-        File pom = getTestPom("mysql-flyway-pom.xml");
+        MavenProject mavenProject = getMavenProject("mysql-flyway");
 
         // when
-        lookupMojo("generate", pom).execute();
+        mojoRule.lookupConfiguredMojo(mavenProject, "generate").execute();
 
         // then
-        assertThatSchema("test").containsTable("Users.java");
-        assertThatSchema("test").containsTable("FlywaySchemaHistory.java");
+        assertThatProject(mavenProject)
+                .hasGeneratedJooqTable("test", "FlywaySchemaHistory.java")
+                .hasGeneratedJooqTable("test", "Users.java");
     }
 
+    @Test
     public void testMariadbLiquibase() throws Exception {
         // given
-        File pom = getTestPom("mariadb-liquibase-pom.xml");
+        MavenProject mavenProject = getMavenProject("mariadb-liquibase");
 
         // when
-        lookupMojo("generate", pom).execute();
+        mojoRule.lookupConfiguredMojo(mavenProject, "generate").execute();
 
         // then
-        assertThatSchema("test").containsTable("Users.java");
-        assertThatSchema("test").containsTable("Databasechangelog.java");
+        assertThatProject(mavenProject)
+                .hasGeneratedJooqTable("test", "Users.java")
+                .hasGeneratedJooqTable("test", "Databasechangelog.java");
     }
 
-    private File getTestPom(String filename) {
-        return getTestFile("src/test/resources/pom/%s".formatted(filename));
+    private MavenProject getMavenProject(String dirName) throws Exception {
+        var baseDir = getTestFile("src/test/resources/pom/%s".formatted(dirName));
+        var mavenProject = mojoRule.readMavenProject(baseDir);
+        mojoRule.getContainer().addComponent(mavenProject, MavenProject.class, "");
+        return mavenProject;
     }
 }

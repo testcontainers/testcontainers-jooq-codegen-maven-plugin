@@ -65,17 +65,19 @@
                                 </locations>
                             </flyway>
                             <!-- Generator parameters -->
-                            <generator>
-                                <database>
-                                    <includes>.*</includes>
-                                    <excludes>flyway_schema_history</excludes>
-                                    <inputSchema>test</inputSchema>
-                                </database>
-                                <target>
-                                    <packageName>org.jooq.codegen.maven.example</packageName>
-                                    <directory>target/generated-sources/jooq</directory>
-                                </target>
-                            </generator>
+                            <jooq>
+                                <generator>
+                                    <database>
+                                        <includes>.*</includes>
+                                        <excludes>flyway_schema_history</excludes>
+                                        <inputSchema>test</inputSchema>
+                                    </database>
+                                    <target>
+                                        <packageName>org.jooq.codegen.maven.example</packageName>
+                                        <directory>target/generated-sources/jooq</directory>
+                                    </target>
+                                </generator>
+                            </jooq>
                         </configuration>
                     </execution>
                 </executions>

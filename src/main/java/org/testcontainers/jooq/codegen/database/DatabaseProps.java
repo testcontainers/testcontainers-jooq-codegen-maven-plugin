@@ -1,11 +1,36 @@
 package org.testcontainers.jooq.codegen.database;
 
-/** Database configuration properties. */
+import org.apache.maven.plugins.annotations.Parameter;
+
+/**
+ * Database configuration properties.
+ */
 public class DatabaseProps {
+    /**
+     * Required
+     */
+    @Parameter(required = true)
     private DatabaseType type;
+
+    /**
+     * Optional
+     */
+    @Parameter
     private String containerImage;
+    /**
+     * Optional
+     */
+    @Parameter
     private String username;
+    /**
+     * Optional
+     */
+    @Parameter
     private String password;
+    /**
+     * Optional
+     */
+    @Parameter
     private String databaseName;
 
     public DatabaseType getType() {
