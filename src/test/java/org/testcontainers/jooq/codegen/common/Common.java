@@ -1,4 +1,4 @@
-package common;
+package org.testcontainers.jooq.codegen.common;
 
 import java.nio.file.Path;
 

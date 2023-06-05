@@ -1,7 +1,7 @@
 package org.testcontainers.jooq.codegen;
 
-import static assertions.MavenProjectAssert.assertThatProject;
 import static org.codehaus.plexus.PlexusTestCase.getTestFile;
+import static org.testcontainers.jooq.codegen.assertions.MavenProjectAssert.assertThatProject;
 
 import org.apache.maven.plugin.testing.MojoRule;
 import org.apache.maven.project.MavenProject;

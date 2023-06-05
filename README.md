@@ -9,7 +9,7 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
 * Postgres
 * MySQL
 * MariaDB
-* 
+
 ## Supported migration tools:
 * Flyway - [supported properties](https://flywaydb.org/documentation/configuration/parameters/ )
 * Liquibase - [supported properties](src/main/java/org/testcontainers/jooq/codegen/migration/runner/LiquibaseRunner.java)
@@ -22,9 +22,9 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
 
 <project>
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <testcontainers.version>1.18.3</testcontainers.version>
         <testcontainers-jooq-codegen-maven-plugin.version>0.0.2</testcontainers-jooq-codegen-maven-plugin.version>
         <jooq.version>3.18.3</jooq.version>
@@ -134,7 +134,7 @@ $ cd examples/postgres-flyway-example
 $ mvn clean package
 ```
 
-The JOOQ code should be generated under example/target/generated-sources/jooq folder.
+The JOOQ code should be generated under `example/target/generated-sources/jooq` folder.
 
 ## CREDITS:
 This plugin is heavily based on official https://github.com/jOOQ/jOOQ/tree/main/jOOQ-codegen-maven.

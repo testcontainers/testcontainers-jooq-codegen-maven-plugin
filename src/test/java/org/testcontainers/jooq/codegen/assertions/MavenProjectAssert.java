@@ -1,8 +1,8 @@
-package assertions;
+package org.testcontainers.jooq.codegen.assertions;
 
-import static common.Common.DEFAULT_GENERATED_BASEDIR;
-import static common.Common.DEFAULT_GENERATED_PACKAGE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.testcontainers.jooq.codegen.common.Common.DEFAULT_GENERATED_BASEDIR;
+import static org.testcontainers.jooq.codegen.common.Common.DEFAULT_GENERATED_PACKAGE;
 
 import java.nio.file.Path;
 import org.apache.maven.project.MavenProject;
