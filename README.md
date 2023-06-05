@@ -1,9 +1,9 @@
-# jooq-testcontainers-codegen-maven-plugin
+# testcontainers-jooq-codegen-maven-plugin
 
-The `jooq-testcontainers-codegen-maven-plugin` simplifies the jOOQ code generation 
+The `testcontainers-jooq-codegen-maven-plugin` simplifies the jOOQ code generation 
 by using [Testcontainers](https://www.testcontainers.org/) and applying database migrations.
 
-[![Build](https://github.com/testcontainers/jooq-testcontainers-codegen-maven-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/testcontainers/jooq-testcontainers-codegen-maven-plugin/actions/workflows/build.yml)
+[![Build](https://github.com/testcontainers/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/testcontainers/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml)
 
 ## Supported databases:
 * Postgres
@@ -26,7 +26,7 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <testcontainers.version>1.18.1</testcontainers.version>
-        <jooq-testcontainers-codegen-maven-plugin.version>0.0.2</jooq-testcontainers-codegen-maven-plugin.version>
+        <testcontainers-jooq-codegen-maven-plugin.version>0.0.2</testcontainers-jooq-codegen-maven-plugin.version>
         <jooq.version>3.18.3</jooq.version>
         <postgresql.version>42.6.0</postgresql.version>
     </properties>
@@ -42,8 +42,8 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
         <plugins>
             <plugin>
                 <groupId>org.testcontainers</groupId>
-                <artifactId>jooq-testcontainers-codegen-maven-plugin</artifactId>
-                <version>${jooq-testcontainers-codegen-maven-plugin.version}</version>
+                <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
+                <version>${testcontainers-jooq-codegen-maven-plugin.version}</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.testcontainers</groupId>

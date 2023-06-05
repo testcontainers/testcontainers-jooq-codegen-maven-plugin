@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.testcontainers</groupId>
-    <artifactId>jooq-testcontainers-codegen-maven-plugin-test</artifactId>
+    <artifactId>testcontainers-jooq-codegen-maven-plugin-test</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
         <java.version>17</java.version>
         <testcontainers.version>1.18.1</testcontainers.version>
-        <jooq-testcontainers-codegen-maven-plugin.version>0.0.2
-        </jooq-testcontainers-codegen-maven-plugin.version>
+        <testcontainers-jooq-codegen-maven-plugin.version>0.0.2
+        </testcontainers-jooq-codegen-maven-plugin.version>
         <jooq.version>3.18.3</jooq.version>
         <postgresql.version>42.6.0</postgresql.version>
     </properties>
@@ -30,8 +30,8 @@
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>jooq-testcontainers-codegen-maven-plugin</artifactId>
-            <version>${jooq-testcontainers-codegen-maven-plugin.version}</version>
+            <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
+            <version>${testcontainers-jooq-codegen-maven-plugin.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
@@ -50,8 +50,8 @@
         <plugins>
             <plugin>
                 <groupId>org.testcontainers</groupId>
-                <artifactId>jooq-testcontainers-codegen-maven-plugin</artifactId>
-                <version>${jooq-testcontainers-codegen-maven-plugin.version}</version>
+                <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
+                <version>${testcontainers-jooq-codegen-maven-plugin.version}</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.testcontainers</groupId>
