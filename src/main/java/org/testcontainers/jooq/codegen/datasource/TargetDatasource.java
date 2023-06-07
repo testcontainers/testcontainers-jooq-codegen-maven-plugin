@@ -1,7 +1,6 @@
 package org.testcontainers.jooq.codegen.datasource;
 
 import java.sql.Driver;
-import java.sql.SQLException;
 import java.util.Objects;
 import java.util.function.Predicate;
 import org.jooq.meta.jaxb.Jdbc;
@@ -38,5 +37,5 @@ public interface TargetDatasource extends AutoCloseable {
 
     String getPassword();
 
-    Driver getDriver() throws SQLException;
+    Driver getDriverInstance();
 }

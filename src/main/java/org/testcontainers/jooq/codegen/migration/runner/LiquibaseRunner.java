@@ -21,7 +21,9 @@ import liquibase.resource.SearchPathResourceAccessor;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Parameter;
 
-/** Liquibase runner */
+/**
+ * Liquibase runner
+ */
 public class LiquibaseRunner implements MigrationRunner {
 
     /**
@@ -56,11 +58,11 @@ public class LiquibaseRunner implements MigrationRunner {
     @Override
     public void run(RunnerProperties runnerProperties) throws MojoExecutionException {
         try {
-            Driver driver = runnerProperties.driver();
+            Driver driver = runnerProperties.getDriverInstance();
             Properties properties = new Properties();
-            properties.put("user", runnerProperties.username());
-            properties.put("password", runnerProperties.password());
-            Connection c = driver.connect(runnerProperties.jdbcUrl(), properties);
+            properties.put("user", runnerProperties.getUsername());
+            properties.put("password", runnerProperties.getPassword());
+            Connection c = driver.connect(runnerProperties.getUrl(), properties);
             Database database = createDatabase(c);
             ResourceAccessor accessor = getResourceAccessor(runnerProperties);
             Liquibase liquibase = new Liquibase(changeLogPath, accessor, database);
@@ -84,9 +86,7 @@ public class LiquibaseRunner implements MigrationRunner {
 
     private void setParameters(Liquibase liquibase) {
         if (parameters != null) {
-            for (Map.Entry<String, String> entry : parameters.entrySet()) {
-                liquibase.setChangeLogParameter(entry.getKey(), entry.getValue());
-            }
+            parameters.forEach(liquibase::setChangeLogParameter);
         }
     }
 

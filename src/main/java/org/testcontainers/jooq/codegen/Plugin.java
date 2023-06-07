@@ -33,6 +33,9 @@ public class Plugin extends AbstractMojo {
     @Parameter(property = "project", required = true, readonly = true)
     private MavenProject project;
 
+    @Parameter
+    private boolean skip;
+
     @Parameter(required = true)
     private DatabaseProps database;
 
@@ -50,8 +53,8 @@ public class Plugin extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        if (jooq.skip()) {
-            getLog().info("Skipping jOOQ code generation");
+        if (skip) {
+            getLog().info("'Skip' is true, Skipping jOOQ code generation");
             return;
         }
 
@@ -72,13 +75,12 @@ public class Plugin extends AbstractMojo {
     }
 
     private void doExecute(URLClassLoader mavenClassloader, TargetDatasource targetDatasource) throws Exception {
-        var properties = new RunnerProperties(
-                targetDatasource.getUrl(),
-                targetDatasource.getUsername(),
-                targetDatasource.getPassword(),
-                targetDatasource.getDriver(),
-                mavenClassloader,
-                project);
+        var properties = RunnerProperties.builder()
+                .targetDatasource(targetDatasource)
+                .mavenProject(project)
+                .log(getLog())
+                .mavenClassloader(mavenClassloader)
+                .build();
         Thread.currentThread().setContextClassLoader(mavenClassloader);
 
         final var oFlyway = Optional.<MigrationRunner>ofNullable(flyway);
@@ -97,9 +99,9 @@ public class Plugin extends AbstractMojo {
                 .orElseThrow(() -> new IllegalArgumentException("Neither liquibase nor flyway provided!"))
                 .run(properties);
 
-        getLog().info("Migrations applied successfully");
+        getLog().info("Migration completed");
 
-        jooqGenerator.generateSources(targetDatasource, jooq, getLog());
+        jooqGenerator.generateSources(properties, jooq);
     }
 
     private void closeClassloader(ClassLoader oldCL, URLClassLoader mavenClassloader) {

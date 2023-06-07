@@ -10,8 +10,9 @@
 
     <properties>
         <java.version>17</java.version>
-        <testcontainers.version>1.18.3</testcontainers.version>
-        <testcontainers-jooq-codegen-maven-plugin.version>0.0.3-SNAPSHOT</testcontainers-jooq-codegen-maven-plugin.version>
+        <testcontainers.version>1.18.1</testcontainers.version>
+        <testcontainers-jooq-codegen-maven-plugin.version>0.0.3-SNAPSHOT
+        </testcontainers-jooq-codegen-maven-plugin.version>
         <jooq.version>3.18.3</jooq.version>
         <postgresql.version>42.6.0</postgresql.version>
     </properties>
@@ -62,22 +63,15 @@
                 </executions>
                 <configuration>
                     <database>
-                        <type>POSTGRES</type>
-                        <containerImage>postgres:15-alpine</containerImage>
-                        <username>test</username>
-                        <password>test</password>
-                        <databaseName>test</databaseName>
+                        <type>MYSQL</type>
                     </database>
                     <flyway>
-                        <locations>
-                            filesystem:${project.basedir}/src/main/resources/db/migration/postgres
-                        </locations>
+                        <!--       Config file has been picked Up, used defaults locations             -->
                     </flyway>
                     <jooq>
                         <generator>
                             <database>
                                 <includes>.*</includes>
-                                <inputSchema>public</inputSchema>
                             </database>
                             <target>
                                 <packageName>org.jooq.codegen.maven.test</packageName>

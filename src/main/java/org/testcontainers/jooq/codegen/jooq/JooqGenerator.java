@@ -12,7 +12,7 @@ import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.Jdbc;
 import org.jooq.meta.jaxb.Target;
-import org.testcontainers.jooq.codegen.datasource.TargetDatasource;
+import org.testcontainers.jooq.codegen.migration.runner.RunnerProperties;
 
 /**
  * Jooq sources generator
@@ -22,7 +22,8 @@ public class JooqGenerator {
     @Inject
     private MavenProject project;
 
-    public void generateSources(TargetDatasource targetDatasource, JooqProps jooq, Log log) throws Exception {
+    public void generateSources(RunnerProperties properties, JooqProps jooq) throws Exception {
+        var log = properties.log();
         checkGeneratorArguments(jooq, log);
         setGeneratorTargets(jooq);
 
@@ -32,9 +33,9 @@ public class JooqGenerator {
         if (jdbc == null) {
             jdbc = new Jdbc();
         }
-        jdbc.setUrl(targetDatasource.getUrl());
-        jdbc.setUser(targetDatasource.getUsername());
-        jdbc.setPassword(targetDatasource.getPassword());
+        jdbc.setUrl(properties.getUrl());
+        jdbc.setUser(properties.getUsername());
+        jdbc.setPassword(properties.getPassword());
 
         final var configuration = new Configuration();
         configuration.setJdbc(jdbc);
