@@ -93,17 +93,6 @@ Reference to Liquibase properties - https://docs.liquibase.com/concepts/connecti
 </liquibase> 
 ```
 
-Before run - Make sure your plugin has dependency on a chosen jdbc database driver implementation
-
-```xml
-
-<dependency>
-    <groupId>org.postgresql</groupId>
-    <artifactId>postgresql</artifactId>
-    <version>${postgresql.version}</version>
-</dependency>
-```
-
 ### Jooq
 
 #### Properties
@@ -129,6 +118,17 @@ existing database will be used, no container won't be spin up <br/>
         ....
     </jdbc>
 </jooq>
+```
+
+#### Before run - Make sure your plugin has dependency on a chosen jdbc database driver implementation
+
+```xml
+
+<dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>${postgresql.version}</version>
+</dependency>
 ```
 
 ## Examples
