@@ -106,11 +106,14 @@ Before run - Make sure your plugin has dependency on a chosen jdbc database driv
 
 ### Jooq
 
+#### Properties
+
 `generator` - property to configure jooq generation plugin itself, original
 reference - https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration/ <br/>
 `configurationFiles` / `configurationFile` - are not implemented yet <br/>
 `jdbc` - if contains all required jdbc parameters (url,name,password) -
-existing database will be used, no container won't be spin up
+existing database will be used, no container won't be spin up <br/>
+`baseDir` - directory relative to which generated sources will be generated , `{project.basedir}` - default
 
 #### In order to configure JOOQ add `jooq` block to your plugin `configuration`
 
