@@ -131,19 +131,6 @@
             <artifactId>flyway-core</artifactId>
             <version>${flyway-core.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-maven-plugin -->
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-maven-plugin</artifactId>
-            <version>9.19.1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-maven-plugin -->
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-maven-plugin</artifactId>
-            <version>4.22.0</version>
-        </dependency>
-
 
         <dependency>
             <groupId>org.flywaydb</groupId>

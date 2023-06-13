@@ -7,8 +7,8 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
 
 ## Summary
 
-You can skip code generation and migration using `skip` property <br/>
-If you need to reuse existing database connection - take a look at [Jooq section](#Jooq)
+- Plugin migration and code generation might be skipped using `skip` property <br/>
+- If you need to reuse existing database connection - take a look at [Jooq section](#Jooq)
 
 ## Databases:
 
@@ -79,8 +79,19 @@ implemented yet</b> <br/>
 
 ### Liquibase
 
-Now supported only the most useful properties which you can find in
-[LiquibaseRunner.java](src/main/java/org/testcontainers/jooq/codegen/migration/runner/LiquibaseRunner.java) <br/>
+#### Properties
+Now supports only the most useful properties
+
+| Property                       | Required | type   |
+|--------------------------------|----------|--------|
+| changeLogPath                  | yes      | String |
+| changeLogDirectory             |          | String |
+| parameters                     |          | Map    |
+| defaultSchemaName              |          | String |
+| liquibaseSchemaName            |          | String |
+| databaseChangeLogTableName     |          | String |
+| databaseChangeLogLockTableName |          | String |
+
 Reference to Liquibase properties - https://docs.liquibase.com/concepts/connections/creating-config-properties.html
 
 #### In order to use Liquibase add `liquibase` block to your plugin `configuration`
@@ -93,11 +104,11 @@ Reference to Liquibase properties - https://docs.liquibase.com/concepts/connecti
 </liquibase> 
 ```
 
-### Jooq
+### JOOQ
 
 #### Properties
 
-`generator` - property to configure jooq generation plugin itself, original
+`generator` - property to configure JOOQ generation plugin itself, original
 reference - https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration/ <br/>
 `configurationFiles` / `configurationFile` - are not implemented yet <br/>
 `jdbc` - if contains all required jdbc parameters (url,name,password) -
