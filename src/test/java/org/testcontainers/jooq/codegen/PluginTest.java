@@ -76,7 +76,7 @@ public class PluginTest {
     }
 
     private MavenProject getMavenProject(String dirName) throws Exception {
-        var baseDir = getTestFile("src/test/resources/pom/%s".formatted(dirName));
+        var baseDir = getTestFile(String.format("src/test/resources/pom/%s", dirName));
         var mavenProject = mojoRule.readMavenProject(baseDir);
         mojoRule.getContainer().addComponent(mavenProject, MavenProject.class, "");
         return mavenProject;
