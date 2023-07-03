@@ -1,7 +1,7 @@
 # testcontainers-jooq-codegen-maven-plugin
 
 The `testcontainers-jooq-codegen-maven-plugin` simplifies the jOOQ code generation
-by using [Testcontainers](https://www.testcontainers.org/) and applying database migrations. <br/>
+by using [Testcontainers](https://www.testcontainers.org/) and applying database migrations.
 
 [![Build](https://github.com/testcontainers/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/testcontainers/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml)
 
@@ -10,11 +10,7 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
 - Plugin migration and code generation might be skipped using `skip` property <br/>
 - If you need to reuse existing database connection - take a look at [Jooq section](#Jooq)
 
-## Databases:
-
-* Postgres
-* MySQL
-* MariaDB
+## Database Configuration
 
 #### In order to configure Database use `database` block to your plugin `configuration`
 
@@ -43,6 +39,9 @@ Example
 
 ### Flyway
 
+Flyway works the same way as the original plugin  
+Please find original documentation by link https://flywaydb.org/documentation/usage/maven/
+
 #### Configuration
 
 At runtime default configuration files will be autoloaded as it documented -
@@ -53,7 +52,7 @@ https://flywaydb.org/documentation/configuration/parameters/ <br/>
 <b>Now [config files parameter](https://flywaydb.org/documentation/configuration/parameters/configFiles) is not
 implemented yet</b> <br/>
 
-#### In order to use Flyway add `flyway` block to your plugin `configuration`
+#### `flyway` block configuration
 
 - Zero configuration with defaults
 
@@ -79,7 +78,12 @@ implemented yet</b> <br/>
 
 ### Liquibase
 
+Liquibase's configuration works the same way as the original maven plugin, with some limitations   
+Please find documentation by
+link https://docs.liquibase.com/tools-integrations/maven/using-liquibase-and-maven-pom-file.html
+
 #### Properties
+
 Now supports only the most useful properties
 
 | Property                       | Required | type   |
@@ -108,14 +112,15 @@ Reference to Liquibase properties - https://docs.liquibase.com/concepts/connecti
 
 #### Properties
 
-`generator` - property to configure JOOQ generation plugin itself, original
-reference - https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration/ <br/>
+`generator` - property to configure JOOQ code generation settings.
+See https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration for all the supporting configuration
+properties.  
 `configurationFiles` / `configurationFile` - are not implemented yet <br/>
 `jdbc` - if contains all required jdbc parameters (url,name,password) -
 existing database will be used, no container won't be spin up <br/>
 `baseDir` - directory relative to which generated sources will be generated , `{project.basedir}` - default
 
-#### In order to configure JOOQ add `jooq` block to your plugin `configuration`
+#### `jooq` block configuration
 
 ```xml
 
@@ -131,7 +136,7 @@ existing database will be used, no container won't be spin up <br/>
 </jooq>
 ```
 
-#### Before run - Make sure your plugin has dependency on a chosen jdbc database driver implementation
+#### Plugin dependencies configuration
 
 ```xml
 
@@ -143,6 +148,57 @@ existing database will be used, no container won't be spin up <br/>
 ```
 
 ## Examples
+
+### Complete example
+Example with `PostgreSQL` and minimal configuration with `Flyway` and `JOOQ`
+```xml
+<plugin>
+    <groupId>org.testcontainers</groupId>
+    <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
+    <version>${testcontainers-jooq-codegen-maven-plugin.version}</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${testcontainers.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+    </dependencies>
+    <executions>
+        <execution>
+            <id>generate-jooq-sources</id>
+            <goals>
+                <goal>generate</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+                <database>
+                    <type>POSTGRES</type>
+                </database>
+                <flyway/>
+                <jooq>
+                    <generator>
+                        <database>
+                            <includes>.*</includes>
+                            <inputSchema>public</inputSchema>
+                        </database>
+                        <target>
+                            <packageName>org.jooq.codegen.maven.example</packageName>
+                            <directory>target/generated-sources/jooq</directory>
+                        </target>
+                    </generator>
+                </jooq>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+
+### More examples
 
 [MariaDB + Flyway](examples/mariadb-flyway-example ) <br/>
 [MySQL + Flyway](examples/mysql-flyway-example ) <br/>
