@@ -11,8 +11,9 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
 - If you need to reuse existing database connection - take a look at [Jooq section](#Jooq)
 
 ## Database Configuration
+To configure a target database, you need to specify at least database `type` property.
 
-#### In order to configure Database use `database` block to your plugin `configuration`
+#### Properties
 
 | Parameter      | Required | Default value                                                              | Description                                                    |
 |----------------|----------|----------------------------------------------------------------------------|----------------------------------------------------------------|
@@ -22,7 +23,7 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
 | password       |          | Provided from database container if not specified                          | Database password for container                                |
 | databaseName   |          | Provided from database container if not specified                          | Database name for container                                    |
 
-Example
+#### `database` block configuration
 
 ```xml
 
@@ -98,7 +99,7 @@ Now supports only the most useful properties
 
 Reference to Liquibase properties - https://docs.liquibase.com/concepts/connections/creating-config-properties.html
 
-#### In order to use Liquibase add `liquibase` block to your plugin `configuration`
+#### `liquibase` block configuration
 
 ```xml
 
