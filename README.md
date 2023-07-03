@@ -23,11 +23,11 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
 <project>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <testcontainers.version>1.18.3</testcontainers.version>
-        <testcontainers-jooq-codegen-maven-plugin.version>0.0.2</testcontainers-jooq-codegen-maven-plugin.version>
-        <jooq.version>3.18.3</jooq.version>
+        <testcontainers-jooq-codegen-maven-plugin.version>0.0.3</testcontainers-jooq-codegen-maven-plugin.version>
+        <jooq.version>3.16.20</jooq.version>
         <postgresql.version>42.6.0</postgresql.version>
     </properties>
 

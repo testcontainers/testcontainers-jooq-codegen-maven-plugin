@@ -84,10 +84,8 @@ public class Plugin extends AbstractMojo {
         final var oFlyway = Optional.<MigrationRunner>ofNullable(flyway);
         final var oLiquibase = Optional.<MigrationRunner>ofNullable(liquibase);
         if (bothPresent(oFlyway, oLiquibase)) {
-            getLog().error(
-                            """
-                            Incorrect configuration is provided.Plugin supports only one migration tool.
-                            Please remain only flyway or liquibase.""");
+            getLog().error("Incorrect configuration is provided.Plugin supports only one migration tool.\n"
+                    + "Please remain only flyway or liquibase.");
             throw new MojoExecutionException(
                     "Both configurations for migration tool are provided, pick either flyway or liquibase");
         }

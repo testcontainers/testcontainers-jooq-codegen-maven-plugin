@@ -64,13 +64,10 @@ public class JooqGenerator {
         }
 
         log.error("Incorrect configuration of jOOQ code generation tool");
-        log.error(
-                """
-                        The jOOQ-codegen-maven module's generator configuration is not set up correctly.
-                        This can have a variety of reasons, among which:
-                        - Your pom.xml's <configuration> contains invalid XML according to %s
-                        - There is a version or artifact mismatch between your pom.xml and your commandline"""
-                        .formatted(XSD_CODEGEN));
+        log.error(String.format("The jOOQ-codegen-maven module's generator configuration is not set up correctly.\n"
+                + "This can have a variety of reasons, among which:\n"
+                + "- Your pom.xml's <configuration> contains invalid XML according to %s\n"
+                + "- There is a version or artifact mismatch between your pom.xml and your commandline\n", XSD_CODEGEN));
 
         throw new MojoExecutionException(
                 "Incorrect configuration of jOOQ code generation tool. See error above for details.");

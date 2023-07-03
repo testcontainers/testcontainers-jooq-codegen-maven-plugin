@@ -7,7 +7,7 @@
 
     <groupId>org.testcontainers</groupId>
     <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <packaging>maven-plugin</packaging>
     <name>testcontainers-jooq-codegen-maven-plugin</name>
     <description>jOOQ code generator using Testcontainers</description>
@@ -46,7 +46,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>17</java.version>
+		<java.version>11</java.version>
 		<spotless-maven-plugin.version>2.36.0</spotless-maven-plugin.version>
 		<maven-plugin-api.version>3.9.0</maven-plugin-api.version>
 		<maven-plugin-annotations.version>3.8.1</maven-plugin-annotations.version>
@@ -61,7 +61,7 @@
 		<flyway-core.version>9.16.3</flyway-core.version>
 		<liquibase-core.version>4.22.0</liquibase-core.version>
 		<junit-jupiter.version>5.9.3</junit-jupiter.version>
-		<jooq.version>3.18.3</jooq.version>
+		<jooq.version>3.16.20</jooq.version>
 		<junit.version>4.13.2</junit.version>
 		<postgresql.version>42.6.0</postgresql.version>
 		<mysql-connector-j.version>8.0.32</mysql-connector-j.version>

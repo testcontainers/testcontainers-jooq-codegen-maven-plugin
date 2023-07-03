@@ -13,12 +13,20 @@ public class DatabaseProvider {
     public static JdbcDatabaseContainer<?> getDatabaseContainer(DatabaseProps props) {
         DatabaseType dbType = props.getType();
         String image = Optional.ofNullable(props.getContainerImage()).orElse(dbType.getDefaultImage());
-        JdbcDatabaseContainer<?> container =
-                switch (dbType) {
-                    case POSTGRES -> new PostgreSQLContainer<>(image);
-                    case MARIADB -> new MariaDBContainer<>(image);
-                    case MYSQL -> new MySQLContainer<>(image);
-                };
+        JdbcDatabaseContainer<?> container;
+        switch (dbType) {
+            case POSTGRES:
+                container = new PostgreSQLContainer<>(image);
+                break;
+            case MARIADB:
+                container = new MariaDBContainer<>(image);
+                break;
+            case MYSQL:
+                container = new MySQLContainer<>(image);
+                break;
+            default:
+                throw new IllegalArgumentException(String.format("Unknown DatabaseType: %s.", dbType));
+        }
         if (isNotEmpty(props.getUsername())) {
             container.withUsername(props.getUsername());
         }
