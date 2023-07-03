@@ -7,7 +7,7 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
 
 ## Summary
 
-- Plugin migration and code generation might be skipped using `skip` property <br/>
+- Plugin migration and code generation might be skipped using `skip` property   
 - If you need to reuse existing database connection - take a look at [Jooq section](#Jooq)
 
 ## Database Configuration
@@ -46,12 +46,12 @@ Please find original documentation by link https://flywaydb.org/documentation/us
 #### Configuration
 
 At runtime default configuration files will be autoloaded as it documented -
-https://flywaydb.org/documentation/configuration/configfile <br/>
-Currently, the plugin supports all properties existing in Flyway <br/>
-You can find them by original link <br/>
-https://flywaydb.org/documentation/configuration/parameters/ <br/>
+https://flywaydb.org/documentation/configuration/configfile   
+Currently, the plugin supports all properties existing in Flyway   
+You can find them by original link   
+https://flywaydb.org/documentation/configuration/parameters/   
 <b>Now [config files parameter](https://flywaydb.org/documentation/configuration/parameters/configFiles) is not
-implemented yet</b> <br/>
+implemented yet</b>   
 
 #### `flyway` block configuration
 
@@ -116,9 +116,9 @@ Reference to Liquibase properties - https://docs.liquibase.com/concepts/connecti
 `generator` - property to configure JOOQ code generation settings.
 See https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration for all the supporting configuration
 properties.  
-`configurationFiles` / `configurationFile` - are not implemented yet <br/>
+`configurationFiles` / `configurationFile` - are not implemented yet   
 `jdbc` - if contains all required jdbc parameters (url,name,password) -
-existing database will be used, no container won't be spin up <br/>
+existing database will be used, no container won't be spin up   
 `baseDir` - directory relative to which generated sources will be generated , `{project.basedir}` - default
 
 #### `jooq` block configuration
@@ -201,10 +201,10 @@ Example with `PostgreSQL` and minimal configuration with `Flyway` and `JOOQ`
 
 ### More examples
 
-[MariaDB + Flyway](examples/mariadb-flyway-example ) <br/>
-[MySQL + Flyway](examples/mysql-flyway-example ) <br/>
-[Postgres + Flyway](examples/postgres-flyway-example ) <br/>
-[Postgres + Liquibase](examples/postgres-liquibase-example ) <br/>
+[MariaDB + Flyway](examples/mariadb-flyway-example )   
+[MySQL + Flyway](examples/mysql-flyway-example )   
+[Postgres + Flyway](examples/postgres-flyway-example )   
+[Postgres + Liquibase](examples/postgres-liquibase-example )   
 
 ### Try with example application
 
