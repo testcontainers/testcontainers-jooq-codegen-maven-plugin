@@ -14,7 +14,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <testcontainers.version>1.18.3</testcontainers.version>
-        <testcontainers-jooq-codegen-maven-plugin.version>0.0.2</testcontainers-jooq-codegen-maven-plugin.version>
+        <testcontainers-jooq-codegen-maven-plugin.version>0.0.3-SNAPSHOT</testcontainers-jooq-codegen-maven-plugin.version>
         <jooq.version>3.18.3</jooq.version>
         <mariadb-java-client.version>3.1.2</mariadb-java-client.version>
     </properties>
@@ -59,11 +59,7 @@
                                 <password>test</password> <!-- optional -->
                                 <databaseName>test</databaseName> <!-- optional -->
                             </database>
-                            <flyway>
-                                <locations>
-                                    filesystem:src/main/resources/db/migration/mariadb
-                                </locations>
-                            </flyway>
+                            <flyway/>
                             <!-- Generator parameters -->
                             <jooq>
                                 <generator>

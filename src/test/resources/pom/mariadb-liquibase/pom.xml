@@ -11,7 +11,7 @@
     <properties>
         <java.version>17</java.version>
         <testcontainers.version>1.18.3</testcontainers.version>
-        <testcontainers-jooq-codegen-maven-plugin.version>0.0.2
+        <testcontainers-jooq-codegen-maven-plugin.version>0.0.3-SNAPSHOT
         </testcontainers-jooq-codegen-maven-plugin.version>
         <jooq.version>3.18.3</jooq.version>
         <postgresql.version>42.6.0</postgresql.version>
@@ -27,22 +27,6 @@
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
             <version>${jooq.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
-            <version>${testcontainers-jooq-codegen-maven-plugin.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-core</artifactId>
-            <version>3.9.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 
@@ -85,7 +69,7 @@
                     </database>
                     <liquibase>
                         <changeLogDirectory>
-                            src/test/resources/db/changelog/mariadb
+                            ${project.basedir}/src/main/resources/db/changelog/mariadb
                         </changeLogDirectory>
                         <changeLogPath>
                             db.changelog-root.xml

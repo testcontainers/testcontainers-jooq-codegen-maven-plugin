@@ -11,7 +11,7 @@
     <properties>
         <java.version>17</java.version>
         <testcontainers.version>1.18.3</testcontainers.version>
-        <testcontainers-jooq-codegen-maven-plugin.version>0.0.2</testcontainers-jooq-codegen-maven-plugin.version>
+        <testcontainers-jooq-codegen-maven-plugin.version>0.0.3-SNAPSHOT</testcontainers-jooq-codegen-maven-plugin.version>
         <jooq.version>3.18.3</jooq.version>
         <postgresql.version>42.6.0</postgresql.version>
     </properties>
@@ -27,11 +27,7 @@
             <artifactId>jooq</artifactId>
             <version>${jooq.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
-            <version>${testcontainers-jooq-codegen-maven-plugin.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-core</artifactId>
@@ -85,7 +81,7 @@
                     </database>
                     <liquibase>
                         <changeLogDirectory>
-                            src/test/resources/db/changelog/postgres
+                            ${project.basedir}/src/main/resources/db/changelog/postgres
                         </changeLogDirectory>
                         <changeLogPath>
                             db.changelog-root.xml
