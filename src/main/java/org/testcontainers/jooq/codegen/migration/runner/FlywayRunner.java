@@ -37,12 +37,12 @@ public class FlywayRunner extends HashMap<String, String> implements MigrationRu
     }
 
     private void addDefaults(RunnerProperties runnerProperties) {
-        putIfAbsent(
-                ConfigUtils.LOCATIONS,
-                "%s%s/src/main/resources/db/migration"
-                        .formatted(
-                                Location.FILESYSTEM_PREFIX,
-                                runnerProperties.mavenProject().getBasedir().getAbsolutePath()));
+        var defaultResourceLocation = "%s%s/src/main/resources/db/migration"
+                .formatted(
+                        Location.FILESYSTEM_PREFIX,
+                        runnerProperties.mavenProject().getBasedir().getAbsolutePath());
+        var defaultClasspathLocation = "%s%s".formatted("classpath:", "/db/migration");
+        putIfAbsent(ConfigUtils.LOCATIONS, "%s,%s".formatted(defaultResourceLocation, defaultClasspathLocation));
     }
 
     private String addFlywayPrefix(String key) {

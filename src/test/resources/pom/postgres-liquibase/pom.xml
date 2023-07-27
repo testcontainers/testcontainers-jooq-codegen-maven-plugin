@@ -79,14 +79,7 @@
                         <password>test</password>
                         <databaseName>test</databaseName>
                     </database>
-                    <liquibase>
-                        <changeLogDirectory>
-                            ${project.basedir}/src/main/resources/db/changelog/postgres
-                        </changeLogDirectory>
-                        <changeLogPath>
-                            db.changelog-root.xml
-                        </changeLogPath>
-                    </liquibase>
+                    <liquibase/>
                     <jooq>
                         <generator>
                             <database>

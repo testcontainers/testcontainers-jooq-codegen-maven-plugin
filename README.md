@@ -7,10 +7,11 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
 
 ## Summary
 
-- Plugin migration and code generation might be skipped using `skip` property   
+- Plugin migration and code generation might be skipped using `skip` property
 - If you need to reuse existing database connection - take a look at [Jooq section](#Jooq)
 
 ## Database Configuration
+
 To configure a target database, you need to specify at least database `type` property.
 
 #### Properties
@@ -51,7 +52,7 @@ Currently, the plugin supports all properties existing in Flyway
 You can find them by original link   
 https://flywaydb.org/documentation/configuration/parameters/   
 <b>Now [config files parameter](https://flywaydb.org/documentation/configuration/parameters/configFiles) is not
-implemented yet</b>   
+implemented yet</b>, but you can use config file at default location ${baseDir}/flyway.conf
 
 #### `flyway` block configuration
 
@@ -87,25 +88,35 @@ link https://docs.liquibase.com/tools-integrations/maven/using-liquibase-and-mav
 
 Now supports only the most useful properties
 
-| Property                       | Required | type   |
-|--------------------------------|----------|--------|
-| changeLogPath                  | yes      | String |
-| changeLogDirectory             |          | String |
-| parameters                     |          | Map    |
-| defaultSchemaName              |          | String |
-| liquibaseSchemaName            |          | String |
-| databaseChangeLogTableName     |          | String |
-| databaseChangeLogLockTableName |          | String |
+| Property                       | type   | default                                                                                                                      |
+|--------------------------------|--------|------------------------------------------------------------------------------------------------------------------------------|
+| changeLogPath                  | String | if changeLogDirectory is provided - db.changelog-root.xml, otherwise - src/main/resources/db/changelog/db.changelog-root.xml |
+| changeLogDirectory             | String | projectBaseDir                                                                                                               |
+| parameters                     | Map    |                                                                                                                              |
+| defaultSchemaName              | String |                                                                                                                              |
+| liquibaseSchemaName            | String |                                                                                                                              |
+| databaseChangeLogTableName     | String |                                                                                                                              |
+| databaseChangeLogLockTableName | String |                                                                                                                              |
 
 Reference to Liquibase properties - https://docs.liquibase.com/concepts/connections/creating-config-properties.html
 
 #### `liquibase` block configuration
 
+- Zero configuration with defaults
+
+```xml
+
+<liquibase/>
+```
+
+- Adding properties
+
 ```xml
 
 <liquibase>
-    <changeLogPath>db.changelog-root.xml</changeLogPath>
-    <changeLogDirectory>src/main/resources/db/changelog</changeLogPath>
+    <changeLogPath>db.changelog-root.yml</changeLogPath>
+    <changeLogDirectory>src/main/resources/db/postgres/changelog</changeLogPath>
+    <defaultSchemaName>custom</defaultSchemaName>
 </liquibase> 
 ```
 
@@ -151,8 +162,11 @@ existing database will be used, no container won't be spin up
 ## Examples
 
 ### Complete example
+
 Example with `PostgreSQL` and minimal configuration with `Flyway` and `JOOQ`
+
 ```xml
+
 <plugin>
     <groupId>org.testcontainers</groupId>
     <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
@@ -204,7 +218,7 @@ Example with `PostgreSQL` and minimal configuration with `Flyway` and `JOOQ`
 [MariaDB + Flyway](examples/mariadb-flyway-example )   
 [MySQL + Flyway](examples/mysql-flyway-example )   
 [Postgres + Flyway](examples/postgres-flyway-example )   
-[Postgres + Liquibase](examples/postgres-liquibase-example )   
+[Postgres + Liquibase](examples/postgres-liquibase-example )
 
 ### Try with example application
 

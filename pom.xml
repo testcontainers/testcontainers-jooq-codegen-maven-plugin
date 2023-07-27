@@ -315,9 +315,6 @@
                     <dependenciesToScan>
                         <dependency>org.junit.vintage:junit-vintage-engine</dependency>
                     </dependenciesToScan>
-<!--                    <includes>-->
-<!--                        <include>**/JUnit3Runner.java</include>-->
-<!--                    </includes>-->
                 </configuration>
             </plugin>
         </plugins>
