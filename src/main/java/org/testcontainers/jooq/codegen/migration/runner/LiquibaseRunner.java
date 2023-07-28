@@ -27,14 +27,15 @@ import org.apache.maven.plugins.annotations.Parameter;
 public class LiquibaseRunner implements MigrationRunner {
 
     /**
-     * Required property <br>
+     * Default: {@link #changeLogDirectory}/{@link #changeLogPath db.changelog-root.xml}<br/>
+     * or src/main/resources/{@link #changeLogPath db.changelog-root.xml} <br/>
+     * depending on {@link #changeLogDirectory} presence <br/>
      * Example: src/main/resources/db/changelog/db.changelog-root.xml
      */
-    @Parameter(name = "liquibase.changeLogPath", required = true)
+    @Parameter(name = "liquibase.changeLogPath")
     private String changeLogPath;
 
     /**
-     * Optional <br>
      * Default: project.basedir
      */
     @Parameter(name = "liquibase.changeLogDirectory")
@@ -56,20 +57,36 @@ public class LiquibaseRunner implements MigrationRunner {
     private String databaseChangeLogLockTableName;
 
     @Override
-    public void run(RunnerProperties runnerProperties) throws MojoExecutionException {
+    public void run(RunnerProperties runnerProps) throws MojoExecutionException {
+        setDefaultLocations(runnerProps);
         try {
-            Driver driver = runnerProperties.getDriverInstance();
+            Driver driver = runnerProps.getDriverInstance();
             Properties properties = new Properties();
-            properties.put("user", runnerProperties.getUsername());
-            properties.put("password", runnerProperties.getPassword());
-            Connection c = driver.connect(runnerProperties.getUrl(), properties);
+            properties.put("user", runnerProps.getUsername());
+            properties.put("password", runnerProps.getPassword());
+            Connection c = driver.connect(runnerProps.getUrl(), properties);
             Database database = createDatabase(c);
-            ResourceAccessor accessor = getResourceAccessor(runnerProperties);
+            ResourceAccessor accessor = getResourceAccessor(runnerProps);
             Liquibase liquibase = new Liquibase(changeLogPath, accessor, database);
             setParameters(liquibase);
             liquibase.update();
         } catch (Exception e) {
             throw new MojoExecutionException(e.getMessage());
+        }
+    }
+
+    private void setDefaultLocations(RunnerProperties runnerProps) {
+        var defaultDir = runnerProps.mavenProject().getBasedir();
+        if (changeLogPath == null) {
+            changeLogPath = changeLogDirectory == null
+                    ? "src/main/resources/db/changelog/db.changelog-root.xml"
+                    : "db.changelog-root.xml";
+        }
+        if (changeLogDirectory == null) {
+            changeLogDirectory = defaultDir.getAbsolutePath();
+        } else {
+            changeLogDirectory =
+                    defaultDir.toPath().resolve(changeLogDirectory).toFile().getAbsolutePath();
         }
     }
 
