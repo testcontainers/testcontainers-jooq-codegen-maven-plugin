@@ -4,6 +4,7 @@ The `testcontainers-jooq-codegen-maven-plugin` simplifies the jOOQ code generati
 by using [Testcontainers](https://www.testcontainers.org/) and applying database migrations.
 
 [![Build](https://github.com/testcontainers/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/testcontainers/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml)
+![Maven Central](https://img.shields.io/maven-central/v/org.testcontainers/testcontainers-jooq-codegen-maven-plugin?label=latest-version)
 
 ## Summary
 
