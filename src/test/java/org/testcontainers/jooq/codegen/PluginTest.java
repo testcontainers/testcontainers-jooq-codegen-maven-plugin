@@ -56,7 +56,7 @@ public class PluginTest {
     }
 
     @Test
-    public void testPostgissFlyway() throws Exception {
+    public void testPostgisFlyway() throws Exception {
         // given
         MavenProject mavenProject = getMavenProject("postgis-flyway");
 
