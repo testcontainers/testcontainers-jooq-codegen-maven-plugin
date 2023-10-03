@@ -18,8 +18,10 @@ public class DatabaseProvider {
                 switch (dbType) {
                     case POSTGRES -> new PostgreSQLContainer<>(
                             DockerImageName.parse(image).asCompatibleSubstituteFor("postgres"));
-                    case MARIADB -> new MariaDBContainer<>(image);
-                    case MYSQL -> new MySQLContainer<>(image);
+                    case MARIADB -> new MariaDBContainer<>(
+                            DockerImageName.parse(image).asCompatibleSubstituteFor("mariadb"));
+                    case MYSQL -> new MySQLContainer<>(
+                            DockerImageName.parse(image).asCompatibleSubstituteFor("mysql"));
                 };
         if (isNotEmpty(props.getUsername())) {
             container.withUsername(props.getUsername());
