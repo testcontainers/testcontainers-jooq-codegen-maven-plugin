@@ -56,6 +56,20 @@ public class PluginTest {
     }
 
     @Test
+    public void testPostgisFlyway() throws Exception {
+        // given
+        MavenProject mavenProject = getMavenProject("postgis-flyway");
+
+        // when
+        mojoRule.lookupConfiguredMojo(mavenProject, "generate").execute();
+
+        // then
+        assertThatProject(mavenProject)
+                .hasGeneratedJooqTable("Users.java")
+                .hasGeneratedJooqTable("FlywaySchemaHistory.java");
+    }
+
+    @Test
     public void testMysqlFlyway() throws Exception {
         // given
         MavenProject mavenProject = getMavenProject("mysql-flyway");
