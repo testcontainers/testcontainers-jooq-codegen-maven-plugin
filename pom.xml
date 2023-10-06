@@ -57,7 +57,7 @@
         <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
         <maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
         <maven-plugin-tools-annotations.version>3.6.1</maven-plugin-tools-annotations.version>
-        <testcontainers.version>1.18.3</testcontainers.version>
+        <testcontainers.version>1.19.0</testcontainers.version>
         <flyway-core.version>9.16.3</flyway-core.version>
         <liquibase-core.version>4.22.0</liquibase-core.version>
         <junit-jupiter.version>5.9.3</junit-jupiter.version>
