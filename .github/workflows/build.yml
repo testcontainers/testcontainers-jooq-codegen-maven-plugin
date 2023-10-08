@@ -6,11 +6,13 @@ on:
     paths-ignore:
       - '.sdkmanrc'
       - 'README.md'
+      - 'RELEASING.md'
   pull_request:
     branches: [ main ]
     paths-ignore:
       - '.sdkmanrc'
       - 'README.md'
+      - 'RELEASING.md'
 
 permissions:
   contents: read
