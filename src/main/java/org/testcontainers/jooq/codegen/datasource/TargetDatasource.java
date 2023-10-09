@@ -16,7 +16,7 @@ public interface TargetDatasource extends AutoCloseable {
     static TargetDatasource createOrJoinExisting(JooqProps jooq, DatabaseProps database) {
         if (needSpinContainer(jooq)) {
             var databaseContainer = DatabaseProvider.getDatabaseContainer(database);
-            return new ContainerTargetDatasource(databaseContainer);
+            return new ContainerTargetDatasource(databaseContainer, database.getInitScript());
         }
 
         return new ExistingTargetDatasource(jooq.getJdbc());

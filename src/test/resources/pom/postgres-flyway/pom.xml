@@ -67,6 +67,7 @@
                         <username>test</username>
                         <password>test</password>
                         <databaseName>test</databaseName>
+                        <initScript>filesystem:${project.basedir}/src/test/resources/db/init.sql</initScript>
                     </database>
                     <flyway>
                         <locations>

@@ -34,4 +34,9 @@ public class DatabaseProps {
      */
     @Parameter
     private String databaseName;
+    /**
+     * Optional
+     */
+    @Parameter
+    private String initScript;
 }

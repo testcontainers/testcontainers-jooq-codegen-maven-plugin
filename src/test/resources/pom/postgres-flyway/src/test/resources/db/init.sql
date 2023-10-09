@@ -1,0 +1,1 @@
+CREATE USER read_user WITH PASSWORD 'test123';
