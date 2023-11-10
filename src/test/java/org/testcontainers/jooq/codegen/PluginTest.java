@@ -41,6 +41,21 @@ public class PluginTest {
     }
 
     @Test
+    public void testPostgresFlywayBaseline() throws Exception {
+        // given
+        MavenProject mavenProject = getMavenProject("postgres-flyway-baseline");
+
+        // when
+        mojoRule.lookupConfiguredMojo(mavenProject, "generate").execute();
+
+        // then
+        assertThatProject(mavenProject)
+                .hasGeneratedJooqTable("Users.java")
+                .hasGeneratedJooqTable("Person.java")
+                .hasGeneratedJooqTable("FlywaySchemaHistory.java");
+    }
+
+    @Test
     public void testPostgresLiquibase() throws Exception {
         // given
         MavenProject mavenProject = getMavenProject("postgres-liquibase");
