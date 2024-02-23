@@ -8,6 +8,7 @@ import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import javax.inject.Inject;
 import org.apache.maven.plugin.AbstractMojo;
@@ -62,15 +63,12 @@ public class Plugin extends AbstractMojo {
             throw new MojoExecutionException("Property 'type' should be specified inside 'database' block");
         }
 
-        final var oldCL = Thread.currentThread().getContextClassLoader();
-        final var mavenClassloader = getMavenClassloader();
-
-        try (var targetDatasource = TargetDatasource.createOrJoinExisting(jooq, database)) {
-            doExecute(mavenClassloader, targetDatasource);
-        } catch (Exception ex) {
-            throw new MojoExecutionException("Error running jOOQ code generation tool", ex);
-        } finally {
-            closeClassloader(oldCL, mavenClassloader);
+        try (var closableContextClassLoader = new ClosableContextClassLoader(getMavenClassloader())) {
+            try (var targetDatasource = TargetDatasource.createOrJoinExisting(jooq, database)) {
+                doExecute(closableContextClassLoader.getClassLoader(), targetDatasource);
+            } catch (Exception ex) {
+                throw new MojoExecutionException("Error running jOOQ code generation tool", ex);
+            }
         }
     }
 
@@ -81,7 +79,6 @@ public class Plugin extends AbstractMojo {
                 .log(getLog())
                 .mavenClassloader(mavenClassloader)
                 .build();
-        Thread.currentThread().setContextClassLoader(mavenClassloader);
 
         final var oFlyway = Optional.<MigrationRunner>ofNullable(flyway);
         final var oLiquibase = Optional.<MigrationRunner>ofNullable(liquibase);
@@ -104,15 +101,6 @@ public class Plugin extends AbstractMojo {
         jooqGenerator.generateSources(properties, jooq);
     }
 
-    private void closeClassloader(ClassLoader oldCL, URLClassLoader mavenClassloader) {
-        Thread.currentThread().setContextClassLoader(oldCL);
-        try {
-            mavenClassloader.close();
-        } catch (Throwable e) {
-            getLog().error("Couldn't close the classloader.", e);
-        }
-    }
-
     private URLClassLoader getMavenClassloader() throws MojoExecutionException {
         try {
             List<String> classpathElements = project.getRuntimeClasspathElements();
@@ -128,6 +116,35 @@ public class Plugin extends AbstractMojo {
             return new URLClassLoader(urls, getClass().getClassLoader());
         } catch (Exception e) {
             throw new MojoExecutionException("Couldn't create a classloader.", e);
+        }
+    }
+
+    private class ClosableContextClassLoader implements AutoCloseable {
+        private URLClassLoader newClassLoader;
+        private ClassLoader oldClassLoader;
+
+        public ClosableContextClassLoader(URLClassLoader cl) {
+            newClassLoader = Objects.requireNonNull(cl);
+            oldClassLoader = Thread.currentThread().getContextClassLoader();
+            Thread.currentThread().setContextClassLoader(newClassLoader);
+        }
+
+        public URLClassLoader getClassLoader() {
+            return newClassLoader;
+        }
+
+        @Override
+        public void close() {
+            if (newClassLoader == null) {
+                return;
+            }
+            Thread.currentThread().setContextClassLoader(oldClassLoader);
+            try {
+                newClassLoader.close();
+                newClassLoader = null;
+            } catch (Throwable e) {
+                getLog().error("Couldn't close the classloader.", e);
+            }
         }
     }
 }
