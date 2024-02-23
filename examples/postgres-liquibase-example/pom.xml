@@ -65,7 +65,7 @@
                                 <defaultSchemaName>public</defaultSchemaName>
                                 <!-- or
                                <changeLogPath>db.changelog-root.xml</changeLogPath>
-                               <changeLogDirectory>src/main/resources/db/changelog</changeLogPath>
+                               <changeLogDirectory>src/main/resources/db/changelog</changeLogDirectory>
                                -->
                             </liquibase>
 

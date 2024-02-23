@@ -129,8 +129,7 @@ Reference to Liquibase properties - https://docs.liquibase.com/concepts/connecti
 See https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration for all the supporting configuration
 properties.  
 `configurationFiles` / `configurationFile` - are not implemented yet   
-`jdbc` - if contains all required jdbc parameters (url,name,password) -
-existing database will be used, no container won't be spin up   
+`jdbc` - If it has all the necessary JDBC parameters (URL, name, password), it will use the existing database, and no container will be spun up.  
 `baseDir` - directory relative to which generated sources will be generated , `{project.basedir}` - default
 
 #### `jooq` block configuration
