@@ -24,6 +24,7 @@ To configure a target database, you need to specify at least database `type` pro
 | username       |          | Provided from database container if not specified                          | Database username for container                                |
 | password       |          | Provided from database container if not specified                          | Database password for container                                |
 | databaseName   |          | Provided from database container if not specified                          | Database name for container                                    |
+| initScript     |          |                                                                            | Path to SQL script to run after container creation                     |
 
 #### `database` block configuration
 
@@ -35,6 +36,7 @@ To configure a target database, you need to specify at least database `type` pro
     <username>test</username>
     <password>test</password>
     <databaseName>test</databaseName>
+    <initScript>filesystem:src/test/resources/db/init.sql</initScript>
 </database>
 ```
 

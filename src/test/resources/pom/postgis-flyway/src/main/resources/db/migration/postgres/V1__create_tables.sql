@@ -14,3 +14,5 @@ create table users
     primary key (id),
     CONSTRAINT user_email_unique UNIQUE (email)
 );
+
+grant select on users to read_user;
