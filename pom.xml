@@ -61,7 +61,7 @@
         <flyway-core.version>9.16.3</flyway-core.version>
         <liquibase-core.version>4.22.0</liquibase-core.version>
         <junit-jupiter.version>5.9.3</junit-jupiter.version>
-        <jooq.version>3.18.3</jooq.version>
+        <jooq.version>3.19.8</jooq.version>
         <junit.version>4.13.2</junit.version>
         <postgresql.version>42.6.0</postgresql.version>
         <mysql-connector-j.version>8.0.32</mysql-connector-j.version>
