@@ -7,7 +7,7 @@
 
     <groupId>org.testcontainers</groupId>
     <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>testcontainers-jooq-codegen-maven-plugin</name>
     <description>jOOQ code generator using Testcontainers</description>
@@ -77,11 +77,13 @@
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
             <version>${maven-plugin-api.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-core</artifactId>
             <version>${maven-core.version}</version>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>junit</groupId>
