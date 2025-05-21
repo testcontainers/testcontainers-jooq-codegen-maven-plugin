@@ -89,14 +89,12 @@ public class Plugin extends AbstractMojo {
         RunnerProperties properties = getRunnerProperties(mavenClassloader);
         Thread.currentThread().setContextClassLoader(mavenClassloader);
 
-        GenerationTool.copyLarge()
-
         String currentChecksum = getCurrentChecksum(migrationRunner, properties);
 
         try {
             Path checksumPath = Path.of(output.getPath(), ".testcontainers-jooq-codegen.checksum");
 
-            if (changed(checksumPath, currentChecksum)) {
+            if (!skipIfInputIsUnchanged || changed(checksumPath, currentChecksum)) {
                 try (var targetDatasource = TargetDatasource.createOrJoinExisting(jooq, database)) {
                     doExecute(targetDatasource, migrationRunner, properties);
                 }
