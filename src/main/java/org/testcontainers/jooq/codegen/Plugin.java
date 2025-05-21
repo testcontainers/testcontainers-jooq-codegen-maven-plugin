@@ -7,6 +7,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.Configuration;
 import org.testcontainers.jooq.codegen.database.DatabaseProps;
 import org.testcontainers.jooq.codegen.datasource.TargetDatasource;
@@ -88,6 +89,8 @@ public class Plugin extends AbstractMojo {
         RunnerProperties properties = getRunnerProperties(mavenClassloader);
         Thread.currentThread().setContextClassLoader(mavenClassloader);
 
+        GenerationTool.copyLarge()
+
         String currentChecksum = getCurrentChecksum(migrationRunner, properties);
 
         try {
@@ -119,8 +122,8 @@ public class Plugin extends AbstractMojo {
         Configuration configuration = jooqGenerator.getConfiguration(getLog(), jooq);
         String configurationXML = configuration.toString();
         return Hashing.sha256()
-            .hashString(configurationXML, Charsets.UTF_8)
-            .toString();
+                .hashString(configurationXML, Charsets.UTF_8)
+                .toString();
     }
 
     private static String getChangesetsChecksum(MigrationRunner migrationRunner, RunnerProperties properties) throws MojoExecutionException {
@@ -157,23 +160,23 @@ public class Plugin extends AbstractMojo {
 
         if (bothPresent(oFlyway, oLiquibase)) {
             getLog().error(
-                """
-                    Incorrect configuration is provided.Plugin supports only one migration tool.
-                    Please remain only flyway or liquibase.""");
+                            """
+                            Incorrect configuration is provided.Plugin supports only one migration tool.
+                            Please remain only flyway or liquibase.""");
             throw new MojoExecutionException(
-                "Both configurations for migration tool are provided, pick either flyway or liquibase");
+                    "Both configurations for migration tool are provided, pick either flyway or liquibase");
         }
 
         return oLiquibase
-            .or(() -> oFlyway)
-            .orElseThrow(() -> new IllegalArgumentException("Neither liquibase nor flyway provided!"));
+                .or(() -> oFlyway)
+                .orElseThrow(() -> new IllegalArgumentException("Neither liquibase nor flyway provided!"));
     }
 
     private RunnerProperties getRunnerProperties(URLClassLoader mavenClassloader) {
         return RunnerProperties.builder()
-            .mavenProject(project)
-            .mavenClassloader(mavenClassloader)
-            .build();
+                .mavenProject(project)
+                .mavenClassloader(mavenClassloader)
+                .build();
     }
 
     private void closeClassloader(ClassLoader oldCL, URLClassLoader mavenClassloader) {
