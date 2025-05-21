@@ -28,10 +28,4 @@ public final class RunnerProperties {
      * Maven classloader
      */
     private final URLClassLoader mavenClassloader;
-
-    /**
-     * Datasource to migrate and generate sources on
-     */
-    @Delegate
-    private final TargetDatasource targetDatasource;
 }

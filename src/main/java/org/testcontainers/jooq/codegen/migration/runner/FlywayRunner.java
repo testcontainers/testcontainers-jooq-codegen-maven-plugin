@@ -1,9 +1,12 @@
 package org.testcontainers.jooq.codegen.migration.runner;
 
-import java.util.HashMap;
 import org.flywaydb.core.api.Location;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.flywaydb.core.internal.configuration.ConfigUtils;
+import org.testcontainers.jooq.codegen.datasource.TargetDatasource;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * Map with flyway properties, each added property will be prefixed with "flyway"
@@ -17,11 +20,17 @@ public class FlywayRunner extends HashMap<String, String> implements MigrationRu
     }
 
     @Override
-    public void run(RunnerProperties runnerProperties) {
+    public String checksum(RunnerProperties runnerProperties) {
+        // Checksums have not been implemented for Flyway yet
+        return UUID.randomUUID().toString();
+    }
+
+    @Override
+    public void run(RunnerProperties runnerProperties, TargetDatasource targetDatasource) {
         var log = runnerProperties.log();
-        put(ConfigUtils.URL, runnerProperties.getUrl());
-        put(ConfigUtils.USER, runnerProperties.getUsername());
-        put(ConfigUtils.PASSWORD, runnerProperties.getPassword());
+        put(ConfigUtils.URL, targetDatasource.getUrl());
+        put(ConfigUtils.USER, targetDatasource.getUsername());
+        put(ConfigUtils.PASSWORD, targetDatasource.getPassword());
 
         var configuration = new FluentConfiguration().loadDefaultConfigurationFiles();
 
