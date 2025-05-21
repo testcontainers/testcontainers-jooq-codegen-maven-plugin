@@ -8,10 +8,12 @@ import javax.inject.Inject;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
+import org.jetbrains.annotations.NotNull;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.Jdbc;
 import org.jooq.meta.jaxb.Target;
+import org.testcontainers.jooq.codegen.datasource.TargetDatasource;
 import org.testcontainers.jooq.codegen.migration.runner.RunnerProperties;
 
 /**
@@ -22,31 +24,39 @@ public class JooqGenerator {
     @Inject
     private MavenProject project;
 
-    public void generateSources(RunnerProperties properties, JooqProps jooq) throws Exception {
-        var log = properties.log();
-        checkGeneratorArguments(jooq, log);
-        setGeneratorTargets(jooq);
+    public void generateSources(Log log, TargetDatasource targetDatasource, JooqProps jooq) throws Exception {
+        var configuration = getConfiguration(log, jooq);
 
         var jdbc = jooq.getJdbc();
-        var basedir = Optional.ofNullable(jooq.getBaseDir())
-                .orElse(project.getBasedir().getAbsolutePath());
         if (jdbc == null) {
             jdbc = new Jdbc();
         }
-        jdbc.setUrl(properties.getUrl());
-        jdbc.setUser(properties.getUsername());
-        jdbc.setPassword(properties.getPassword());
 
-        final var configuration = new Configuration();
+        jdbc.setUrl(targetDatasource.getUrl());
+        jdbc.setUser(targetDatasource.getUsername());
+        jdbc.setPassword(targetDatasource.getPassword());
+
         configuration.setJdbc(jdbc);
-        configuration.setGenerator(jooq.getGenerator());
-        configuration.setBasedir(basedir);
 
         if (log.isDebugEnabled()) {
             log.debug("Using this configuration:\n" + configuration);
         }
         GenerationTool.generate(configuration);
         project.addCompileSourceRoot(jooq.getGenerator().getTarget().getDirectory());
+    }
+
+    public Configuration getConfiguration(Log log, JooqProps jooq) throws MojoExecutionException {
+        checkGeneratorArguments(jooq, log);
+        setGeneratorTargets(jooq);
+
+        var configuration = new Configuration();
+        configuration.setGenerator(jooq.getGenerator());
+
+        var basedir = Optional.ofNullable(jooq.getBaseDir())
+            .orElse(project.getBasedir().getAbsolutePath());
+        configuration.setBasedir(basedir);
+
+        return configuration;
     }
 
     private void setGeneratorTargets(JooqProps jooq) {
