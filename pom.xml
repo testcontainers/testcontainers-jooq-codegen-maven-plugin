@@ -57,7 +57,7 @@
         <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
         <maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
         <maven-plugin-tools-annotations.version>3.6.1</maven-plugin-tools-annotations.version>
-        <testcontainers.version>1.19.1</testcontainers.version>
+        <testcontainers.version>2.0.2</testcontainers.version>
         <flyway-core.version>9.16.3</flyway-core.version>
         <liquibase-core.version>4.22.0</liquibase-core.version>
         <junit-jupiter.version>5.9.3</junit-jupiter.version>
@@ -67,7 +67,7 @@
         <mysql-connector-j.version>8.0.32</mysql-connector-j.version>
         <mariadb-java-client.version>3.1.2</mariadb-java-client.version>
         <assertj-core.version>3.24.2</assertj-core.version>
-        <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
+        <maven-plugin-testing-harness.version>3.4.0</maven-plugin-testing-harness.version>
         <junit-vintage-engine.version>5.9.3</junit-vintage-engine.version>
         <lombok.version>1.18.26</lombok.version>
     </properties>
@@ -118,7 +118,7 @@
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>jdbc</artifactId>
+            <artifactId>testcontainers-jdbc</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -145,15 +145,15 @@
 
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>postgresql</artifactId>
+            <artifactId>testcontainers-postgresql</artifactId>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>mysql</artifactId>
+            <artifactId>testcontainers-mysql</artifactId>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>mariadb</artifactId>
+            <artifactId>testcontainers-mariadb</artifactId>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -209,6 +209,11 @@
                 <version>${testcontainers.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <artifactId>commons-lang3</artifactId>
+                <groupId>org.apache.commons</groupId>
+                <version>3.18.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
