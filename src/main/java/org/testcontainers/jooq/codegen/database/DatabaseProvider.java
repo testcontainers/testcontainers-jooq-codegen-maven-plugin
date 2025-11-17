@@ -16,12 +16,12 @@ public class DatabaseProvider {
         String image = Optional.ofNullable(props.getContainerImage()).orElse(dbType.getDefaultImage());
         JdbcDatabaseContainer<?> container =
                 switch (dbType) {
-                    case POSTGRES -> new PostgreSQLContainer<>(
-                            DockerImageName.parse(image).asCompatibleSubstituteFor("postgres"));
-                    case MARIADB -> new MariaDBContainer<>(
-                            DockerImageName.parse(image).asCompatibleSubstituteFor("mariadb"));
-                    case MYSQL -> new MySQLContainer<>(
-                            DockerImageName.parse(image).asCompatibleSubstituteFor("mysql"));
+                    case POSTGRES ->
+                        new PostgreSQLContainer<>(DockerImageName.parse(image).asCompatibleSubstituteFor("postgres"));
+                    case MARIADB ->
+                        new MariaDBContainer<>(DockerImageName.parse(image).asCompatibleSubstituteFor("mariadb"));
+                    case MYSQL ->
+                        new MySQLContainer<>(DockerImageName.parse(image).asCompatibleSubstituteFor("mysql"));
                 };
         if (isNotEmpty(props.getUsername())) {
             container.withUsername(props.getUsername());

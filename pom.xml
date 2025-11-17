@@ -47,7 +47,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
-        <spotless-maven-plugin.version>2.36.0</spotless-maven-plugin.version>
+        <spotless-maven-plugin.version>2.44.5</spotless-maven-plugin.version>
         <maven-plugin-api.version>3.9.0</maven-plugin-api.version>
         <maven-plugin-annotations.version>3.8.1</maven-plugin-annotations.version>
         <maven-project.version>2.2.1</maven-project.version>
@@ -57,7 +57,7 @@
         <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
         <maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
         <maven-plugin-tools-annotations.version>3.6.1</maven-plugin-tools-annotations.version>
-        <testcontainers.version>1.19.1</testcontainers.version>
+        <testcontainers.version>2.0.2</testcontainers.version>
         <flyway-core.version>9.16.3</flyway-core.version>
         <liquibase-core.version>4.22.0</liquibase-core.version>
         <junit-jupiter.version>5.9.3</junit-jupiter.version>
@@ -69,7 +69,7 @@
         <assertj-core.version>3.24.2</assertj-core.version>
         <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
         <junit-vintage-engine.version>5.9.3</junit-vintage-engine.version>
-        <lombok.version>1.18.26</lombok.version>
+        <lombok.version>1.18.38</lombok.version>
     </properties>
 
     <dependencies>
@@ -118,7 +118,7 @@
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>jdbc</artifactId>
+            <artifactId>testcontainers-jdbc</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -145,15 +145,15 @@
 
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>postgresql</artifactId>
+            <artifactId>testcontainers-postgresql</artifactId>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>mysql</artifactId>
+            <artifactId>testcontainers-mysql</artifactId>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>mariadb</artifactId>
+            <artifactId>testcontainers-mariadb</artifactId>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -210,6 +210,16 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.18.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.17.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -258,7 +268,7 @@
                         <importOrder/>
                         <removeUnusedImports/>
                         <palantirJavaFormat>
-                            <version>2.30.0</version>
+                            <version>2.68.0</version>
                         </palantirJavaFormat>
                         <formatAnnotations/>
                     </java>
