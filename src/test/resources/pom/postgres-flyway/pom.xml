@@ -10,10 +10,10 @@
 
     <properties>
         <java.version>17</java.version>
-        <testcontainers.version>1.19.1</testcontainers.version>
-        <testcontainers-jooq-codegen-maven-plugin.version>0.0.4</testcontainers-jooq-codegen-maven-plugin.version>
-        <jooq.version>3.18.3</jooq.version>
-        <postgresql.version>42.6.0</postgresql.version>
+        <testcontainers.version>2.0.5</testcontainers.version>
+        <testcontainers-jooq-codegen-maven-plugin.version>0.0.5-SNAPSHOT</testcontainers-jooq-codegen-maven-plugin.version>
+        <jooq.version>3.21.6</jooq.version>
+        <postgresql.version>42.7.11</postgresql.version>
     </properties>
 
     <dependencies>
@@ -39,7 +39,7 @@
                 <dependencies>
                     <dependency>
                         <groupId>org.testcontainers</groupId>
-                        <artifactId>postgresql</artifactId>
+                        <artifactId>testcontainers-postgresql</artifactId>
                         <version>${testcontainers.version}</version>
                     </dependency>
                     <dependency>
@@ -63,7 +63,7 @@
                 <configuration>
                     <database>
                         <type>POSTGRES</type>
-                        <containerImage>postgres:15-alpine</containerImage>
+                        <containerImage>postgres:17</containerImage>
                         <username>test</username>
                         <password>test</password>
                         <databaseName>test</databaseName>
