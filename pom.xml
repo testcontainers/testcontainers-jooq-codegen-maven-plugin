@@ -66,7 +66,6 @@
         <mariadb-java-client.version>3.5.9</mariadb-java-client.version>
         <assertj-core.version>3.27.7</assertj-core.version>
         <maven-plugin-testing-harness.version>3.5.1</maven-plugin-testing-harness.version>
-        <lombok.version>1.18.46</lombok.version>
         <jreleaser-maven-plugin.version>1.24.0</jreleaser-maven-plugin.version>
         <maven-verifier.version>2.0.0-M1</maven-verifier.version>
         <palantir-java-format.version>2.93.0</palantir-java-format.version>
@@ -84,11 +83,6 @@
             <artifactId>maven-core</artifactId>
             <scope>provided</scope>
             <version>${maven-core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

@@ -1,6 +1,5 @@
 package org.testcontainers.jooq.codegen.jooq;
 
-import lombok.Data;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.jooq.meta.jaxb.Generator;
 import org.jooq.meta.jaxb.Jdbc;
@@ -8,7 +7,6 @@ import org.jooq.meta.jaxb.Jdbc;
 /**
  * Jooq specific properties
  */
-@Data
 public class JooqProps {
 
     /**
@@ -31,4 +29,30 @@ public class JooqProps {
      */
     @Parameter
     private String baseDir;
+
+    public JooqProps() {}
+
+    public Jdbc getJdbc() {
+        return jdbc;
+    }
+
+    public void setJdbc(Jdbc jdbc) {
+        this.jdbc = jdbc;
+    }
+
+    public Generator getGenerator() {
+        return generator;
+    }
+
+    public void setGenerator(Generator generator) {
+        this.generator = generator;
+    }
+
+    public String getBaseDir() {
+        return baseDir;
+    }
+
+    public void setBaseDir(String baseDir) {
+        this.baseDir = baseDir;
+    }
 }

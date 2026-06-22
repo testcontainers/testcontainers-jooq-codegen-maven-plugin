@@ -75,12 +75,7 @@ public class Plugin extends AbstractMojo {
     }
 
     private void doExecute(URLClassLoader mavenClassloader, TargetDatasource targetDatasource) throws Exception {
-        var properties = RunnerProperties.builder()
-                .targetDatasource(targetDatasource)
-                .mavenProject(project)
-                .log(getLog())
-                .mavenClassloader(mavenClassloader)
-                .build();
+        var properties = new RunnerProperties(getLog(), project, mavenClassloader, targetDatasource);
         Thread.currentThread().setContextClassLoader(mavenClassloader);
 
         final var oFlyway = Optional.<MigrationRunner>ofNullable(flyway);
