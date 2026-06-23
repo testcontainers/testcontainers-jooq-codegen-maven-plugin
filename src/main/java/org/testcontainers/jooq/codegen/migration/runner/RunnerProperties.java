@@ -1,37 +1,34 @@
 package org.testcontainers.jooq.codegen.migration.runner;
 
 import java.net.URLClassLoader;
-import lombok.Builder;
-import lombok.Data;
-import lombok.experimental.Accessors;
-import lombok.experimental.Delegate;
+import java.sql.Driver;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.testcontainers.jooq.codegen.datasource.TargetDatasource;
 
 /**
  * Properties for running migration and generation sources
+ *
+ * @param log              Maven logger
+ * @param mavenProject     Target project
+ * @param mavenClassloader Maven classloader
+ * @param targetDatasource Datasource to migrate and generate sources on
  */
-@Data
-@Builder
-@Accessors(fluent = true)
-public final class RunnerProperties {
-    /**
-     * Maven logger
-     */
-    private final Log log;
-    /**
-     * Target project
-     */
-    private final MavenProject mavenProject;
-    /**
-     * Maven classloader
-     */
-    private final URLClassLoader mavenClassloader;
+public record RunnerProperties(
+        Log log, MavenProject mavenProject, URLClassLoader mavenClassloader, TargetDatasource targetDatasource) {
+    public String getUrl() {
+        return targetDatasource.getUrl();
+    }
 
-    /**
-     * Datasource to migrate and generate sources on
-     */
-    @Delegate
-    private final TargetDatasource targetDatasource;
+    public String getUsername() {
+        return targetDatasource.getUsername();
+    }
+
+    public String getPassword() {
+        return targetDatasource.getPassword();
+    }
+
+    public Driver getDriverInstance() {
+        return targetDatasource.getDriverInstance();
+    }
 }

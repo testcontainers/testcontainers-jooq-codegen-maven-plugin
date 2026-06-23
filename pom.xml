@@ -7,7 +7,7 @@
 
     <groupId>org.testcontainers</groupId>
     <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>testcontainers-jooq-codegen-maven-plugin</name>
     <description>jOOQ code generator using Testcontainers</description>
@@ -47,58 +47,48 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
-        <spotless-maven-plugin.version>2.36.0</spotless-maven-plugin.version>
-        <maven-plugin-api.version>3.9.0</maven-plugin-api.version>
-        <maven-plugin-annotations.version>3.8.1</maven-plugin-annotations.version>
-        <maven-project.version>2.2.1</maven-project.version>
-        <maven-core.version>3.9.0</maven-core.version>
-        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
-        <maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
-        <maven-plugin-tools-annotations.version>3.6.1</maven-plugin-tools-annotations.version>
-        <testcontainers.version>1.19.1</testcontainers.version>
-        <flyway-core.version>9.16.3</flyway-core.version>
-        <liquibase-core.version>4.22.0</liquibase-core.version>
-        <junit-jupiter.version>5.9.3</junit-jupiter.version>
-        <jooq.version>3.18.3</jooq.version>
-        <junit.version>4.13.2</junit.version>
-        <postgresql.version>42.6.0</postgresql.version>
-        <mysql-connector-j.version>8.0.32</mysql-connector-j.version>
-        <mariadb-java-client.version>3.1.2</mariadb-java-client.version>
-        <assertj-core.version>3.24.2</assertj-core.version>
-        <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
-        <junit-vintage-engine.version>5.9.3</junit-vintage-engine.version>
-        <lombok.version>1.18.26</lombok.version>
+        <spotless-maven-plugin.version>3.7.0</spotless-maven-plugin.version>
+        <maven-plugin-api.version>3.9.16</maven-plugin-api.version>
+        <maven-plugin-annotations.version>3.15.2</maven-plugin-annotations.version>
+        <maven-core.version>3.9.16</maven-core.version>
+        <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
+        <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
+        <maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
+        <maven-plugin-plugin.version>3.15.2</maven-plugin-plugin.version>
+        <testcontainers.version>2.0.5</testcontainers.version>
+        <flyway-core.version>12.9.0</flyway-core.version>
+        <liquibase-core.version>5.0.3</liquibase-core.version>
+        <junit-jupiter.version>6.1.0</junit-jupiter.version>
+        <jooq.version>3.21.6</jooq.version>
+        <postgresql.version>42.7.11</postgresql.version>
+        <mysql-connector-j.version>9.7.0</mysql-connector-j.version>
+        <mariadb-java-client.version>3.5.9</mariadb-java-client.version>
+        <assertj-core.version>3.27.7</assertj-core.version>
+        <maven-plugin-testing-harness.version>3.5.1</maven-plugin-testing-harness.version>
+        <jreleaser-maven-plugin.version>1.24.0</jreleaser-maven-plugin.version>
+        <maven-verifier.version>2.0.0-M1</maven-verifier.version>
+        <palantir-java-format.version>2.93.0</palantir-java-format.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
+            <scope>provided</scope>
             <version>${maven-plugin-api.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-core</artifactId>
+            <scope>provided</scope>
             <version>${maven-core.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-compat</artifactId>
-            <version>3.9.1</version>
-            <scope>test</scope>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.22</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -117,24 +107,18 @@
             <artifactId>testcontainers</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>jdbc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
             <version>${flyway-core.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-mysql</artifactId>
+            <version>${flyway-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
             <version>${flyway-core.version}</version>
         </dependency>
         <dependency>
@@ -145,33 +129,30 @@
 
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>postgresql</artifactId>
+            <artifactId>testcontainers-postgresql</artifactId>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>mysql</artifactId>
+            <artifactId>testcontainers-mysql</artifactId>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>mariadb</artifactId>
+            <artifactId>testcontainers-mariadb</artifactId>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>${mysql-connector-j.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
             <version>${mariadb-java-client.version}</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -193,9 +174,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
-            <version>${junit-vintage-engine.version}</version>
+            <groupId>org.apache.maven.shared</groupId>
+            <artifactId>maven-verifier</artifactId>
+            <version>${maven-verifier.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -218,7 +199,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>${maven-source-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -258,7 +239,7 @@
                         <importOrder/>
                         <removeUnusedImports/>
                         <palantirJavaFormat>
-                            <version>2.30.0</version>
+                            <version>${palantir-java-format.version}</version>
                         </palantirJavaFormat>
                         <formatAnnotations/>
                     </java>
@@ -276,19 +257,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>${maven-plugin-plugin.version}</version>
-                <!-- Required for Java 17 -->
-                <dependencies>
-                    <dependency>
-                        <groupId>org.ow2.asm</groupId>
-                        <artifactId>asm</artifactId>
-                        <version>9.4</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.maven.plugin-tools</groupId>
-                        <artifactId>maven-plugin-tools-annotations</artifactId>
-                        <version>${maven-plugin-tools-annotations.version}</version>
-                    </dependency>
-                </dependencies>
                 <configuration>
                     <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
                 </configuration>
@@ -310,12 +278,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
-                <configuration>
-                    <dependenciesToScan>
-                        <dependency>org.junit.vintage:junit-vintage-engine</dependency>
-                    </dependenciesToScan>
-                </configuration>
+                <version>${maven-surefire-plugin.version}</version>
             </plugin>
         </plugins>
     </build>
@@ -354,7 +317,7 @@
                     <plugin>
                         <groupId>org.jreleaser</groupId>
                         <artifactId>jreleaser-maven-plugin</artifactId>
-                        <version>1.6.0</version>
+                        <version>${jreleaser-maven-plugin.version}</version>
                         <configuration>
                             <jreleaser>
                                 <signing>
