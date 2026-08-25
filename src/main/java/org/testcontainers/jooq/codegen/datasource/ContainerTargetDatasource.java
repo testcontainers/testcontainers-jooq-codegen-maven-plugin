@@ -3,7 +3,6 @@ package org.testcontainers.jooq.codegen.datasource;
 import java.sql.Driver;
 import java.util.Objects;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.wait.strategy.HostPortWaitStrategy;
 
 /**
  * Containerized target datasource
@@ -17,7 +16,6 @@ public final class ContainerTargetDatasource implements TargetDatasource {
 
     public ContainerTargetDatasource(JdbcDatabaseContainer<?> container) {
         this.container = Objects.requireNonNull(container);
-        this.container.setWaitStrategy(new HostPortWaitStrategy());
         this.container.start();
     }
 
