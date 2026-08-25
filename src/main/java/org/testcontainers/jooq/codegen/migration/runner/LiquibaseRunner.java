@@ -108,12 +108,12 @@ public class LiquibaseRunner implements MigrationRunner {
     }
 
     private ResourceAccessor getResourceAccessor(RunnerProperties properties) throws FileNotFoundException {
-        List<ResourceAccessor> resourceAccessors = new ArrayList<>();
-        resourceAccessors.add(new ClassLoaderResourceAccessor(properties.mavenClassloader()));
-        resourceAccessors.add(new ClassLoaderResourceAccessor(getClass().getClassLoader()));
-        resourceAccessors.add(
-                new DirectoryResourceAccessor(properties.mavenProject().getBasedir()));
-        ResourceAccessor[] array = resourceAccessors.toArray(ResourceAccessor[]::new);
-        return new SearchPathResourceAccessor(changeLogDirectory, array);
+        SearchPathResourceAccessor searchPathResourceAccessor = new SearchPathResourceAccessor(changeLogDirectory);
+
+        searchPathResourceAccessor.addResourceAccessor(new ClassLoaderResourceAccessor(properties.mavenClassloader()));
+        searchPathResourceAccessor.addResourceAccessor(new ClassLoaderResourceAccessor(getClass().getClassLoader()));
+        searchPathResourceAccessor.addResourceAccessor(new DirectoryResourceAccessor(properties.mavenProject().getBasedir()));
+
+        return searchPathResourceAccessor;
     }
 }
