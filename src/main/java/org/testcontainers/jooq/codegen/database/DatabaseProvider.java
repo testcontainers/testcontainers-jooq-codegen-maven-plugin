@@ -2,9 +2,9 @@ package org.testcontainers.jooq.codegen.database;
 
 import java.util.Optional;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MariaDBContainer;
-import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.mariadb.MariaDBContainer;
+import org.testcontainers.mysql.MySQLContainer;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
 /** DatabaseProvider provides container instance for a given DatabaseType */
@@ -16,12 +16,12 @@ public class DatabaseProvider {
         String image = Optional.ofNullable(props.getContainerImage()).orElse(dbType.getDefaultImage());
         JdbcDatabaseContainer<?> container =
                 switch (dbType) {
-                    case POSTGRES -> new PostgreSQLContainer<>(
-                            DockerImageName.parse(image).asCompatibleSubstituteFor("postgres"));
-                    case MARIADB -> new MariaDBContainer<>(
-                            DockerImageName.parse(image).asCompatibleSubstituteFor("mariadb"));
-                    case MYSQL -> new MySQLContainer<>(
-                            DockerImageName.parse(image).asCompatibleSubstituteFor("mysql"));
+                    case POSTGRES ->
+                        new PostgreSQLContainer(DockerImageName.parse(image).asCompatibleSubstituteFor("postgres"));
+                    case MARIADB ->
+                        new MariaDBContainer(DockerImageName.parse(image).asCompatibleSubstituteFor("mariadb"));
+                    case MYSQL ->
+                        new MySQLContainer(DockerImageName.parse(image).asCompatibleSubstituteFor("mysql"));
                 };
         if (isNotEmpty(props.getUsername())) {
             container.withUsername(props.getUsername());

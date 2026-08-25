@@ -2,9 +2,9 @@ package org.testcontainers.jooq.codegen.database;
 
 /** Database Types supported by the plugin */
 public enum DatabaseType {
-    POSTGRES("postgres:15.2-alpine"),
-    MYSQL("mysql:8.0.33"),
-    MARIADB("mariadb:10.11");
+    POSTGRES("postgres:18-alpine"),
+    MYSQL("mysql:9.6.0"),
+    MARIADB("mariadb:12");
 
     private final String defaultImage;
 

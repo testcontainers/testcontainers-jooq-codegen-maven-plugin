@@ -2,27 +2,45 @@ package org.testcontainers.jooq.codegen.datasource;
 
 import java.sql.Driver;
 import java.sql.DriverManager;
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
-import lombok.experimental.Delegate;
+import java.sql.SQLException;
 import org.jooq.meta.jaxb.Jdbc;
 
 /**
  * Datasource using provided parameters
  */
-@RequiredArgsConstructor
 public final class ExistingTargetDatasource implements TargetDatasource {
 
     /**
      * Gets datasource properties from provided jdbc connection configuration
      */
-    @Delegate
     private final Jdbc jdbc;
 
+    public ExistingTargetDatasource(Jdbc jdbc) {
+        this.jdbc = jdbc;
+    }
+
     @Override
-    @SneakyThrows
+    public String getUrl() {
+        return jdbc.getUrl();
+    }
+
+    @Override
+    public String getUsername() {
+        return jdbc.getUser();
+    }
+
+    @Override
+    public String getPassword() {
+        return jdbc.getPassword();
+    }
+
+    @Override
     public Driver getDriverInstance() {
-        return DriverManager.getDriver(jdbc.getDriver());
+        try {
+            return DriverManager.getDriver(jdbc.getDriver());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
