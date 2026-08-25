@@ -22,7 +22,7 @@ jobs:
     name: "Build with ${{ matrix.version }}"
     strategy:
       matrix:
-        version: [ 17 ]
+        version: [ 21 ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

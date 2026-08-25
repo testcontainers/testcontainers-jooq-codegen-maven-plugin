@@ -10,12 +10,12 @@
     <version>0.0.4</version>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <testcontainers.version>1.19.1</testcontainers.version>
+        <testcontainers.version>2.0.5</testcontainers.version>
         <testcontainers-jooq-codegen-maven-plugin.version>0.0.4</testcontainers-jooq-codegen-maven-plugin.version>
-        <jooq.version>3.18.3</jooq.version>
+        <jooq.version>3.21.7</jooq.version>
         <mysql-connector-j.version>8.0.32</mysql-connector-j.version>
     </properties>
 
