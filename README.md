@@ -9,7 +9,7 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
 ## Summary
 
 - Plugin migration and code generation might be skipped using `skip` property
-- If you need to reuse existing database connection - take a look at [Jooq section](#Jooq)
+- If you need to reuse the existing database connection, take a look at the [Jooq section](#Jooq)
 
 ## Database Configuration
 
@@ -47,27 +47,24 @@ Please find original documentation by link https://flywaydb.org/documentation/us
 
 #### Configuration
 
-At runtime default configuration files will be autoloaded as it documented -
-https://flywaydb.org/documentation/configuration/configfile   
-Currently, the plugin supports all properties existing in Flyway   
-You can find them by original link   
-https://flywaydb.org/documentation/configuration/parameters/   
-<b>Now [config files parameter](https://flywaydb.org/documentation/configuration/parameters/configFiles) is not
-implemented yet</b>, but you can use config file at default location ${baseDir}/flyway.conf
+At runtime default configuration files will be autoloaded as it documented - https://flywaydb.org/documentation/configuration/configfile.   
+Currently, the plugin supports all properties existing in Flyway.
+
+You can find them by the original link https://flywaydb.org/documentation/configuration/parameters/   
+
+**Now [config files parameter](https://flywaydb.org/documentation/configuration/parameters/configFiles) is not implemented yet**, but you can use the config file at the default location `${baseDir}/flyway.conf`
 
 #### `flyway` block configuration
 
 - Zero configuration with defaults
 
-```xml 
-
+```xml
 <flyway/>
 ```
 
 - Adding properties
 
 ```xml
-
 <flyway>
     <defaultSchema>bank</defaultSchema>
     <createSchemas>true</createSchemas>
@@ -81,39 +78,36 @@ implemented yet</b>, but you can use config file at default location ${baseDir}/
 
 ### Liquibase
 
-Liquibase's configuration works the same way as the original maven plugin, with some limitations   
-Please find documentation by
-link https://docs.liquibase.com/tools-integrations/maven/using-liquibase-and-maven-pom-file.html
+Liquibase's configuration works the same way as the original maven plugin, with some limitations.
+Please find documentation at https://docs.liquibase.com/tools-integrations/maven/using-liquibase-and-maven-pom-file.html
 
 #### Properties
 
 Now supports only the most useful properties
 
-| Property                       | type   | default                                                                                                                      |
-|--------------------------------|--------|------------------------------------------------------------------------------------------------------------------------------|
-| changeLogPath                  | String | if changeLogDirectory is provided - db.changelog-root.xml, otherwise - src/main/resources/db/changelog/db.changelog-root.xml |
-| changeLogDirectory             | String | projectBaseDir                                                                                                               |
-| parameters                     | Map    |                                                                                                                              |
-| defaultSchemaName              | String |                                                                                                                              |
-| liquibaseSchemaName            | String |                                                                                                                              |
-| databaseChangeLogTableName     | String |                                                                                                                              |
-| databaseChangeLogLockTableName | String |                                                                                                                              |
+| Property                       | type   | default                                                                                                                          |
+|--------------------------------|--------|----------------------------------------------------------------------------------------------------------------------------------|
+| changeLogPath                  | String | if changeLogDirectory is provided - `db.changelog-root.xml`, otherwise - `src/main/resources/db/changelog/db.changelog-root.xml` |
+| changeLogDirectory             | String | projectBaseDir                                                                                                                   |
+| parameters                     | Map    |                                                                                                                                  |
+| defaultSchemaName              | String |                                                                                                                                  |
+| liquibaseSchemaName            | String |                                                                                                                                  |
+| databaseChangeLogTableName     | String |                                                                                                                                  |
+| databaseChangeLogLockTableName | String |                                                                                                                                  |
 
-Reference to Liquibase properties - https://docs.liquibase.com/concepts/connections/creating-config-properties.html
+Reference to Liquibase properties: https://docs.liquibase.com/concepts/connections/creating-config-properties.html
 
 #### `liquibase` block configuration
 
 - Zero configuration with defaults
 
 ```xml
-
 <liquibase/>
 ```
 
 - Adding properties
 
 ```xml
-
 <liquibase>
     <changeLogPath>db.changelog-root.yml</changeLogPath>
     <changeLogDirectory>src/main/resources/db/postgres/changelog</changeLogPath>
@@ -125,17 +119,14 @@ Reference to Liquibase properties - https://docs.liquibase.com/concepts/connecti
 
 #### Properties
 
-`generator` - property to configure JOOQ code generation settings.
-See https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration for all the supporting configuration
-properties.  
-`configurationFiles` / `configurationFile` - are not implemented yet   
-`jdbc` - If it has all the necessary JDBC parameters (URL, name, password), it will use the existing database, and no container will be spun up.  
-`baseDir` - directory relative to which generated sources will be generated , `{project.basedir}` - default
+- `generator` - property to configure JOOQ code generation settings. See https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration for all the supporting configuration properties.  
+- `configurationFiles` / `configurationFile` - are not implemented yet   
+- `jdbc` - If it has all the necessary JDBC parameters (URL, name, password), it will use the existing database, and no container will be spun up.  
+- `baseDir` - directory relative to which generated sources will be generated , `{project.basedir}` - default
 
 #### `jooq` block configuration
 
 ```xml
-
 <jooq>
     <generator>
         <database>
@@ -151,7 +142,6 @@ properties.
 #### Plugin dependencies configuration
 
 ```xml
-
 <dependency>
     <groupId>org.postgresql</groupId>
     <artifactId>postgresql</artifactId>
@@ -166,7 +156,6 @@ properties.
 Example with `PostgreSQL` and minimal configuration with `Flyway` and `JOOQ`
 
 ```xml
-
 <plugin>
     <groupId>org.testcontainers</groupId>
     <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
@@ -174,7 +163,7 @@ Example with `PostgreSQL` and minimal configuration with `Flyway` and `JOOQ`
     <dependencies>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>postgresql</artifactId>
+            <artifactId>testcontainers-postgresql</artifactId>
             <version>${testcontainers.version}</version>
         </dependency>
         <dependency>
@@ -220,15 +209,15 @@ Example with `PostgreSQL` and minimal configuration with `Flyway` and `JOOQ`
 [Postgres + Flyway](examples/postgres-flyway-example )   
 [Postgres + Liquibase](examples/postgres-liquibase-example )
 
-### Try with example application
+### Try with an example application
 
 ```shell
 $ cd examples/postgres-flyway-example
 $ mvn clean package
 ```
 
-The JOOQ code should be generated under example/target/generated-sources/jooq folder.
+The JOOQ code should be generated under `example/target/generated-sources/jooq` directory.
 
 ## CREDITS:
 
-This plugin is heavily based on official https://github.com/jOOQ/jOOQ/tree/main/jOOQ-codegen-maven.
+This plugin is heavily inspired from the official [jOOQ-codegen-maven](https://github.com/jOOQ/jOOQ/tree/main/jOOQ-codegen-maven).
