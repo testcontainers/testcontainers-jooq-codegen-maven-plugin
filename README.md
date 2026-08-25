@@ -31,7 +31,7 @@ To configure a target database, you need to specify at least database `type` pro
 
 <database>
     <type>POSTGRES</type>
-    <containerImage>postgres:15-alpine</containerImage>
+    <containerImage>postgres:18-alpine</containerImage>
     <username>test</username>
     <password>test</password>
     <databaseName>test</databaseName>

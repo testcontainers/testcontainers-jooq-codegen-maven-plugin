@@ -7,16 +7,16 @@
 
     <groupId>org.testcontainers.jooqtc</groupId>
     <artifactId>mariadb-flyway-example</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <testcontainers.version>2.0.5</testcontainers.version>
-        <testcontainers-jooq-codegen-maven-plugin.version>0.0.4</testcontainers-jooq-codegen-maven-plugin.version>
+        <testcontainers-jooq-codegen-maven-plugin.version>0.0.5</testcontainers-jooq-codegen-maven-plugin.version>
         <jooq.version>3.21.7</jooq.version>
-        <mariadb-java-client.version>3.1.2</mariadb-java-client.version>
+        <mariadb-java-client.version>3.5.10</mariadb-java-client.version>
     </properties>
 
     <dependencies>
@@ -35,7 +35,7 @@
                 <dependencies>
                     <dependency>
                         <groupId>org.testcontainers</groupId>
-                        <artifactId>mariadb</artifactId>
+                        <artifactId>testcontainers-mariadb</artifactId>
                         <version>${testcontainers.version}</version>
                     </dependency>
                     <dependency>
@@ -54,7 +54,7 @@
                         <configuration>
                             <database>
                                 <type>MARIADB</type>
-                                <containerImage>mariadb:10.11</containerImage> <!-- optional -->
+                                <containerImage>mariadb:12</containerImage> <!-- optional -->
                                 <username>test</username> <!-- optional -->
                                 <password>test</password> <!-- optional -->
                                 <databaseName>test</databaseName> <!-- optional -->

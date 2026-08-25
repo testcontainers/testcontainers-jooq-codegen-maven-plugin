@@ -7,14 +7,14 @@
 
     <groupId>org.testcontainers.jooqtc</groupId>
     <artifactId>postgres-liquibase-example</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <testcontainers.version>2.0.5</testcontainers.version>
-        <testcontainers-jooq-codegen-maven-plugin.version>0.0.4</testcontainers-jooq-codegen-maven-plugin.version>
+        <testcontainers-jooq-codegen-maven-plugin.version>0.0.5</testcontainers-jooq-codegen-maven-plugin.version>
         <jooq.version>3.21.7</jooq.version>
         <postgresql.version>42.7.13</postgresql.version>
     </properties>
@@ -35,7 +35,7 @@
                 <dependencies>
                     <dependency>
                         <groupId>org.testcontainers</groupId>
-                        <artifactId>postgresql</artifactId>
+                        <artifactId>testcontainers-postgresql</artifactId>
                         <version>${testcontainers.version}</version>
                     </dependency>
                     <dependency>
@@ -54,7 +54,7 @@
                         <configuration>
                             <database>
                                 <type>POSTGRES</type>
-                                <containerImage>postgres:15-alpine</containerImage> <!-- optional -->
+                                <containerImage>postgres:18-alpine</containerImage> <!-- optional -->
                                 <username>test</username> <!-- optional -->
                                 <password>test</password> <!-- optional -->
                                 <databaseName>test</databaseName> <!-- optional -->
