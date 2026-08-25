@@ -13,7 +13,7 @@
         <testcontainers.version>2.0.5</testcontainers.version>
         <testcontainers-jooq-codegen-maven-plugin.version>1.0.0</testcontainers-jooq-codegen-maven-plugin.version>
         <jooq.version>3.21.7</jooq.version>
-        <postgresql.version>42.7.9</postgresql.version>
+        <postgresql.version>42.7.13</postgresql.version>
     </properties>
 
     <dependencies>

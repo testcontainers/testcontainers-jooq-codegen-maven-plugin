@@ -13,7 +13,7 @@
         <testcontainers.version>2.0.5</testcontainers.version>
         <testcontainers-jooq-codegen-maven-plugin.version>1.0.0</testcontainers-jooq-codegen-maven-plugin.version>
         <jooq.version>3.21.7</jooq.version>
-        <mariadb.version>3.5.7</mariadb.version>
+        <mariadb.version>3.5.10</mariadb.version>
     </properties>
 
     <dependencies>
